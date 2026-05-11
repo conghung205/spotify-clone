@@ -1,3 +1,5 @@
+import httpRequest from "./utils/httpRequest.js";
+
 // Auth Modal Functionality
 document.addEventListener("DOMContentLoaded", function () {
     // Get DOM elements
@@ -72,26 +74,52 @@ document.addEventListener("DOMContentLoaded", function () {
     showSignupBtn.addEventListener("click", function () {
         showSignupForm();
     });
+
+    // sign up
+    signupForm
+        .querySelector(".auth-form-content")
+        .addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const email = document.querySelector("#signupEmail").value;
+            const password = document.querySelector("#signupPassword").value;
+
+            const credentials = {
+                email,
+                password,
+            };
+
+            try {
+                const { user, access_token } = await httpRequest.post(
+                    "/auth/register",
+                    credentials,
+                );
+
+                // save access_token localstogare
+                localStorage.setItem("accessToken", access_token);
+                updateCurrentUser(user);
+            } catch (error) {
+                if (error?.response?.error?.code === "EMAIL_EXISTS") {
+                    console.log(error.response.error.message);
+                }
+            }
+        });
 });
 
 // User Menu Dropdown Functionality
 document.addEventListener("DOMContentLoaded", function () {
-    const userAvatar = document.getElementById("userAvatar");
+    const userInfo = document.querySelector(".user-info");
     const userDropdown = document.getElementById("userDropdown");
     const logoutBtn = document.getElementById("logoutBtn");
 
     // Toggle dropdown when clicking avatar
-    userAvatar.addEventListener("click", function (e) {
+    userInfo.addEventListener("click", function (e) {
         e.stopPropagation();
         userDropdown.classList.toggle("show");
     });
 
     // Close dropdown when clicking outside
     document.addEventListener("click", function (e) {
-        if (
-            !userAvatar.contains(e.target) &&
-            !userDropdown.contains(e.target)
-        ) {
+        if (!userInfo.contains(e.target) && !userDropdown.contains(e.target)) {
             userDropdown.classList.remove("show");
         }
     });
@@ -113,7 +141,28 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// Other functionality
-document.addEventListener("DOMContentLoaded", function () {
-    // TODO: Implement other functionality here
+// show/hide auth functionality
+document.addEventListener("DOMContentLoaded", async () => {
+    const authButtons = document.querySelector(".auth-buttons");
+    const userMenu = document.querySelector(".user-menu");
+
+    try {
+        const { user } = await httpRequest.get("/users/me");
+        updateCurrentUser(user);
+        userMenu.classList.add("show");
+    } catch (error) {
+        authButtons.classList.add("show");
+    }
 });
+
+function updateCurrentUser(user) {
+    const userName = document.querySelector("#user-name");
+    const userAvatar = document.querySelector("#user-avatar");
+
+    if (user.avatar_url) {
+        userAvatar.src = user.avatar_url;
+    }
+    if (user.email) {
+        userName.textContent = user.email;
+    }
+}

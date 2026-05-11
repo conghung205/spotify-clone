@@ -100,9 +100,12 @@
 }
 
 .auth-buttons {
-    display: flex;
     align-items: center;
     gap: var(--spacing-md);
+    display: none;
+}
+.auth-buttons.show{
+    display: flex;
 }
 
 .content-wrapper {
@@ -110,6 +113,7 @@
     padding: 0 var(--spacing-lg) var(--spacing-lg);
     overflow-y: auto;
 }
+
 
 /* Player */
 .player {
