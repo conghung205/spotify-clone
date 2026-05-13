@@ -1,7 +1,6 @@
-import httpRequest from "./utils/httpRequest.js";
-
-// Auth Modal Functionality
-document.addEventListener("DOMContentLoaded", function () {
+import { login, register } from "../api/auth.js";
+import { showCurrentUser } from "../auth/authUI.js";
+export function initAuthModal() {
     // Get DOM elements
     const signupBtn = document.querySelector(".signup-btn");
     const loginBtn = document.querySelector(".login-btn");
@@ -89,80 +88,78 @@ document.addEventListener("DOMContentLoaded", function () {
             };
 
             try {
-                const { user, access_token } = await httpRequest.post(
-                    "/auth/register",
-                    credentials,
-                );
+                const { user, access_token, refresh_token } =
+                    await register(credentials);
 
                 // save access_token localstogare
                 localStorage.setItem("accessToken", access_token);
-                updateCurrentUser(user);
+                localStorage.setItem("refreshToken", refresh_token);
+                showCurrentUser(user);
+                closeModal();
             } catch (error) {
                 if (error?.response?.error?.code === "EMAIL_EXISTS") {
-                    console.log(error.response.error.message);
+                    const msgError = error.response.error.message;
+                    const inputForm = signupForm.querySelector(".form-group");
+                    const errorMessage = signupForm.querySelector(
+                        ".error-message span",
+                    );
+
+                    inputForm.classList.add("invalid");
+                    errorMessage.textContent = msgError;
+                }
+                if (error?.response?.error?.code === "VALIDATION_ERROR") {
+                    const msgError = error.response.error.message;
+                    const inputForms =
+                        signupForm.querySelectorAll(".form-group");
+                    const errorMessages = signupForm.querySelectorAll(
+                        ".error-message span",
+                    );
+
+                    inputForms.forEach((input) => {
+                        input.classList.add("invalid");
+                    });
+                    errorMessages.forEach((errorMsg) => {
+                        errorMsg.textContent = msgError;
+                    });
                 }
             }
         });
-});
 
-// User Menu Dropdown Functionality
-document.addEventListener("DOMContentLoaded", function () {
-    const userInfo = document.querySelector(".user-info");
-    const userDropdown = document.getElementById("userDropdown");
-    const logoutBtn = document.getElementById("logoutBtn");
+    // login
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = loginForm.querySelector("#loginEmail").value;
+        const password = loginForm.querySelector("#loginPassword").value;
 
-    // Toggle dropdown when clicking avatar
-    userInfo.addEventListener("click", function (e) {
-        e.stopPropagation();
-        userDropdown.classList.toggle("show");
-    });
+        const credentials = {
+            email,
+            password,
+        };
 
-    // Close dropdown when clicking outside
-    document.addEventListener("click", function (e) {
-        if (!userInfo.contains(e.target) && !userDropdown.contains(e.target)) {
-            userDropdown.classList.remove("show");
+        try {
+            const { user, access_token, refresh_token } =
+                await login(credentials);
+
+            // save access_token localstogare
+            localStorage.setItem("accessToken", access_token);
+            localStorage.setItem("refreshToken", refresh_token);
+            showCurrentUser(user);
+            closeModal();
+        } catch (error) {
+            if (error?.response?.error?.code === "INVALID_CREDENTIALS") {
+                const msgError = error.response.error.message;
+                const inputForms = loginForm.querySelectorAll(".form-group");
+                const errorMessages = loginForm.querySelectorAll(
+                    ".error-message span",
+                );
+
+                inputForms.forEach((input) => {
+                    input.classList.add("invalid");
+                });
+                errorMessages.forEach((errorMsg) => {
+                    errorMsg.textContent = msgError;
+                });
+            }
         }
     });
-
-    // Close dropdown when pressing Escape
-    document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape" && userDropdown.classList.contains("show")) {
-            userDropdown.classList.remove("show");
-        }
-    });
-
-    // Handle logout button click
-    logoutBtn.addEventListener("click", function () {
-        // Close dropdown first
-        userDropdown.classList.remove("show");
-
-        console.log("Logout clicked");
-        // TODO: Students will implement logout logic here
-    });
-});
-
-// show/hide auth functionality
-document.addEventListener("DOMContentLoaded", async () => {
-    const authButtons = document.querySelector(".auth-buttons");
-    const userMenu = document.querySelector(".user-menu");
-
-    try {
-        const { user } = await httpRequest.get("/users/me");
-        updateCurrentUser(user);
-        userMenu.classList.add("show");
-    } catch (error) {
-        authButtons.classList.add("show");
-    }
-});
-
-function updateCurrentUser(user) {
-    const userName = document.querySelector("#user-name");
-    const userAvatar = document.querySelector("#user-avatar");
-
-    if (user.avatar_url) {
-        userAvatar.src = user.avatar_url;
-    }
-    if (user.email) {
-        userName.textContent = user.email;
-    }
 }
