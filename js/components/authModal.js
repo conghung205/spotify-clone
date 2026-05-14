@@ -1,5 +1,7 @@
 import { login, register } from "../api/auth.js";
 import { showCurrentUser } from "../auth/authUI.js";
+import { showFieldError, clearInputError } from "../utils/validation.js";
+import { toast } from "./toast.js";
 export function initAuthModal() {
     // Get DOM elements
     const signupBtn = document.querySelector(".signup-btn");
@@ -10,6 +12,10 @@ export function initAuthModal() {
     const loginForm = document.getElementById("loginForm");
     const showLoginBtn = document.getElementById("showLogin");
     const showSignupBtn = document.getElementById("showSignup");
+
+    // clear input form
+    clearInputError(signupForm);
+    clearInputError(loginForm);
 
     // Function to show signup form
     function showSignupForm() {
@@ -88,39 +94,37 @@ export function initAuthModal() {
             };
 
             try {
-                const { user, access_token, refresh_token } =
+                const { message, user, access_token, refresh_token } =
                     await register(credentials);
 
                 // save access_token localstogare
                 localStorage.setItem("accessToken", access_token);
                 localStorage.setItem("refreshToken", refresh_token);
+
+                // when done saving
+
                 showCurrentUser(user);
                 closeModal();
+                toast({
+                    type: "success",
+                    title: "Success",
+                    message: message,
+                    duration: 3000,
+                });
             } catch (error) {
-                if (error?.response?.error?.code === "EMAIL_EXISTS") {
-                    const msgError = error.response.error.message;
-                    const inputForm = signupForm.querySelector(".form-group");
-                    const errorMessage = signupForm.querySelector(
-                        ".error-message span",
-                    );
+                const code = error?.response?.error?.code;
+                const message = error?.response?.error?.message;
 
-                    inputForm.classList.add("invalid");
-                    errorMessage.textContent = msgError;
+                if (error?.response?.error?.code === "EMAIL_EXISTS") {
+                    const emailInput = signupForm.querySelector("#signupEmail");
+
+                    showFieldError(emailInput, message);
                 }
                 if (error?.response?.error?.code === "VALIDATION_ERROR") {
-                    const msgError = error.response.error.message;
-                    const inputForms =
-                        signupForm.querySelectorAll(".form-group");
-                    const errorMessages = signupForm.querySelectorAll(
-                        ".error-message span",
-                    );
-
-                    inputForms.forEach((input) => {
-                        input.classList.add("invalid");
-                    });
-                    errorMessages.forEach((errorMsg) => {
-                        errorMsg.textContent = msgError;
-                    });
+                    const message = error?.response?.error?.details[0].message;
+                    const passwordInput =
+                        signupForm.querySelector("#signupPassword");
+                    showFieldError(passwordInput, message);
                 }
             }
         });
@@ -137,28 +141,32 @@ export function initAuthModal() {
         };
 
         try {
-            const { user, access_token, refresh_token } =
+            const { message, user, access_token, refresh_token } =
                 await login(credentials);
 
             // save access_token localstogare
             localStorage.setItem("accessToken", access_token);
             localStorage.setItem("refreshToken", refresh_token);
+
+            // when done saving
             showCurrentUser(user);
             closeModal();
+            toast({
+                type: "success",
+                title: "Success",
+                message: message,
+                duration: 3000,
+            });
         } catch (error) {
-            if (error?.response?.error?.code === "INVALID_CREDENTIALS") {
-                const msgError = error.response.error.message;
-                const inputForms = loginForm.querySelectorAll(".form-group");
-                const errorMessages = loginForm.querySelectorAll(
-                    ".error-message span",
-                );
+            const code = error?.response?.error?.code;
+            const message = error?.response?.error?.message;
 
-                inputForms.forEach((input) => {
-                    input.classList.add("invalid");
-                });
-                errorMessages.forEach((errorMsg) => {
-                    errorMsg.textContent = msgError;
-                });
+            if (code === "INVALID_CREDENTIALS") {
+                const emailInput = loginForm.querySelector("#loginEmail");
+                const passwordInput = loginForm.querySelector("#loginPassword");
+
+                showFieldError(emailInput, message);
+                showFieldError(passwordInput, message);
             }
         }
     });
