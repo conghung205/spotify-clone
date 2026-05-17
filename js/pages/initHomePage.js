@@ -3,9 +3,9 @@ import popularArtists from "../components/popularArtists.js";
 import homePage from "./homePage.js";
 
 async function initHomePage() {
-    const app = document.getElementById("app");
+    const contentContainer = document.getElementById("content-container");
 
-    app.innerHTML = homePage();
+    contentContainer.innerHTML = homePage();
 
     await popularAlbums();
     await popularArtists();

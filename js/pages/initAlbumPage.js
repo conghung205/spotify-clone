@@ -2,11 +2,12 @@ import httpRequest from "../api/httpRequest.js";
 import albumPage from "./albumPage.js";
 import albumHero from "../components/albumHero.js";
 import albumTracks from "../components/albumTracks.js";
+import playTrack from "../player/playTrack.js";
 
 async function initAlbumPage(albumId) {
-    const app = document.getElementById("app");
+    const contentContainer = document.getElementById("content-container");
 
-    app.innerHTML = albumPage();
+    contentContainer.innerHTML = albumPage();
 
     // options display
     const options = document.querySelector(".options");
@@ -39,6 +40,19 @@ async function initAlbumPage(albumId) {
 
     heroContainer.innerHTML = albumHero(album);
     tracksContainer.innerHTML = albumTracks(tracksList);
+
+    // addEventListener
+    tracksContainer.addEventListener("click", (e) => {
+        const trackItem = e.target.closest(".track-item");
+
+        if (!trackItem) return;
+
+        const index = trackItem.dataset.index;
+
+        const track = tracksList[index];
+
+        playTrack(track);
+    });
 }
 
 export default initAlbumPage;

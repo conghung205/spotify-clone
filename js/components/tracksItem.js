@@ -1,7 +1,7 @@
 import formatDuration from "../utils/formatDuration.js";
 function tracksItem(track, index) {
     return `
-    <div class="track-item">
+    <div class="track-item" data-index="${index}">
         <div class="track-number">${index + 1}</div>
         <div class="track-image">
             <img

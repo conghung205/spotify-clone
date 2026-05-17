@@ -1,166 +1,118 @@
-import { login, register } from "../api/auth.js";
-import { showCurrentUser } from "../auth/authUI.js";
-import { showFieldError, clearInputError } from "../utils/validation.js";
-import { toast } from "./toast.js";
-export function initAuthModal() {
-    // Get DOM elements
-    const signupBtn = document.querySelector(".signup-btn");
-    const loginBtn = document.querySelector(".login-btn");
-    const authModal = document.getElementById("authModal");
-    const modalClose = document.getElementById("modalClose");
-    const signupForm = document.getElementById("signupForm");
-    const loginForm = document.getElementById("loginForm");
-    const showLoginBtn = document.getElementById("showLogin");
-    const showSignupBtn = document.getElementById("showSignup");
+function authModal() {
+    return `
+    <!-- Auth Modal -->
+        <div class="modal-overlay" id="authModal">
+            <div class="modal-container">
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
 
-    // clear input form
-    clearInputError(signupForm);
-    clearInputError(loginForm);
+                <div class="modal-content">
+                    <div class="modal-logo">
+                        <i class="fab fa-spotify"></i>
+                    </div>
 
-    // Function to show signup form
-    function showSignupForm() {
-        signupForm.style.display = "block";
-        loginForm.style.display = "none";
-    }
+                    <!-- Sign Up Form -->
+                    <div class="auth-form" id="signupForm">
+                        <h1 class="modal-heading">
+                            Sign up to start listening
+                        </h1>
 
-    // Function to show login form
-    function showLoginForm() {
-        signupForm.style.display = "none";
-        loginForm.style.display = "block";
-    }
+                        <form class="auth-form-content">
+                            <div class="form-group">
+                                <input
+                                    type="email"
+                                    placeholder="Email address"
+                                    class="form-input"
+                                    id="signupEmail"
+                                />
+                                <div class="error-message">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span
+                                        >Please enter a valid email
+                                        address</span
+                                    >
+                                </div>
+                            </div>
 
-    // Function to open modal
-    function openModal() {
-        authModal.classList.add("show");
-        document.body.style.overflow = "hidden"; // Prevent background scrolling
-    }
+                            <div class="form-group">
+                                <input
+                                    type="password"
+                                    placeholder="Password"
+                                    class="form-input"
+                                    id="signupPassword"
+                                />
+                                <div class="error-message">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span
+                                        >Password must be at least 8
+                                        characters</span
+                                    >
+                                </div>
+                            </div>
 
-    // Open modal with Sign Up form when clicking Sign Up button
-    signupBtn.addEventListener("click", function () {
-        showSignupForm();
-        openModal();
-    });
+                            <button type="submit" class="auth-submit-btn">
+                                Sign Up
+                            </button>
+                        </form>
 
-    // Open modal with Login form when clicking Login button
-    loginBtn.addEventListener("click", function () {
-        showLoginForm();
-        openModal();
-    });
+                        <div class="auth-switch">
+                            <span>Already have an account? </span>
+                            <button class="auth-link" id="showLogin">
+                                Log in here
+                            </button>
+                        </div>
+                    </div>
 
-    // Close modal function
-    function closeModal() {
-        authModal.classList.remove("show");
-        document.body.style.overflow = "auto"; // Restore scrolling
-    }
+                    <!-- Login Form -->
+                    <div class="auth-form" id="loginForm" style="display: none">
+                        <h1 class="modal-heading">Log in to Spotify</h1>
 
-    // Close modal when clicking close button
-    modalClose.addEventListener("click", closeModal);
+                        <form class="auth-form-content">
+                            <div class="form-group">
+                                <input
+                                    type="email"
+                                    placeholder="Email address"
+                                    class="form-input"
+                                    id="loginEmail"
+                                />
+                                <div class="error-message">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span
+                                        >Please enter a valid email
+                                        address</span
+                                    >
+                                </div>
+                            </div>
 
-    // Close modal with Escape key
-    document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape" && authModal.classList.contains("show")) {
-            closeModal();
-        }
-    });
+                            <div class="form-group">
+                                <input
+                                    type="password"
+                                    placeholder="Password"
+                                    class="form-input"
+                                    id="loginPassword"
+                                />
+                                <div class="error-message">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Please enter your password</span>
+                                </div>
+                            </div>
 
-    // Switch to Login form
-    showLoginBtn.addEventListener("click", function () {
-        showLoginForm();
-    });
+                            <button type="submit" class="auth-submit-btn">
+                                Log In
+                            </button>
+                        </form>
 
-    // Switch to Signup form
-    showSignupBtn.addEventListener("click", function () {
-        showSignupForm();
-    });
-
-    // sign up
-    signupForm
-        .querySelector(".auth-form-content")
-        .addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const email = document.querySelector("#signupEmail").value;
-            const password = document.querySelector("#signupPassword").value;
-
-            const credentials = {
-                email,
-                password,
-            };
-
-            try {
-                const { message, user, access_token, refresh_token } =
-                    await register(credentials);
-
-                // save access_token localstogare
-                localStorage.setItem("accessToken", access_token);
-                localStorage.setItem("refreshToken", refresh_token);
-
-                // when done saving
-
-                showCurrentUser(user);
-                closeModal();
-                toast({
-                    type: "success",
-                    title: "Success",
-                    message: message,
-                    duration: 3000,
-                });
-            } catch (error) {
-                const code = error?.response?.error?.code;
-                const message = error?.response?.error?.message;
-
-                if (error?.response?.error?.code === "EMAIL_EXISTS") {
-                    const emailInput = signupForm.querySelector("#signupEmail");
-
-                    showFieldError(emailInput, message);
-                }
-                if (error?.response?.error?.code === "VALIDATION_ERROR") {
-                    const message = error?.response?.error?.details[0].message;
-                    const passwordInput =
-                        signupForm.querySelector("#signupPassword");
-                    showFieldError(passwordInput, message);
-                }
-            }
-        });
-
-    // login
-    loginForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const email = loginForm.querySelector("#loginEmail").value;
-        const password = loginForm.querySelector("#loginPassword").value;
-
-        const credentials = {
-            email,
-            password,
-        };
-
-        try {
-            const { message, user, access_token, refresh_token } =
-                await login(credentials);
-
-            // save access_token localstogare
-            localStorage.setItem("accessToken", access_token);
-            localStorage.setItem("refreshToken", refresh_token);
-
-            // when done saving
-            showCurrentUser(user);
-            closeModal();
-            toast({
-                type: "success",
-                title: "Success",
-                message: message,
-                duration: 3000,
-            });
-        } catch (error) {
-            const code = error?.response?.error?.code;
-            const message = error?.response?.error?.message;
-
-            if (code === "INVALID_CREDENTIALS") {
-                const emailInput = loginForm.querySelector("#loginEmail");
-                const passwordInput = loginForm.querySelector("#loginPassword");
-
-                showFieldError(emailInput, message);
-                showFieldError(passwordInput, message);
-            }
-        }
-    });
+                        <div class="auth-switch">
+                            <span>Don't have an account? </span>
+                            <button class="auth-link" id="showSignup">
+                                Sign up here
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
 }
+export default authModal;
