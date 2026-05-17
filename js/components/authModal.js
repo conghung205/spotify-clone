@@ -56,13 +56,6 @@ export function initAuthModal() {
     // Close modal when clicking close button
     modalClose.addEventListener("click", closeModal);
 
-    // Close modal when clicking overlay (outside modal container)
-    authModal.addEventListener("click", function (e) {
-        if (e.target === authModal) {
-            closeModal();
-        }
-    });
-
     // Close modal with Escape key
     document.addEventListener("keydown", function (e) {
         if (e.key === "Escape" && authModal.classList.contains("show")) {
