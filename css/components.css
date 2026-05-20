@@ -749,7 +749,7 @@
 }
 
 /* Player Controls */
-
+.control-btn-shuffle-large,
 .control-btn-large,
 .control-btn {
     position: relative;
@@ -762,6 +762,7 @@
     justify-content: center;
     transition: all var(--transition-fast);
 }
+.control-btn-shuffle-large,
 .control-btn-large{
     font-size: 32px;
 }
@@ -773,11 +774,12 @@
     background-color: var(--accent-primary);
     display: none;
 }
-
+.control-btn-shuffle-large:hover,
 .control-btn-large:hover {
     color: var(--text-primary);
     transform: scale(1.04);
 }
+.control-btn-shuffle-large.active,
 .control-btn-large.active{
     color: var(--accent-primary);
 }
@@ -855,6 +857,28 @@
 }
 
 /* Progress bars */
+.progress-bar{
+    user-select: none; 
+    -webkit-user-select: none;
+    cursor: pointer;
+}
+.progress-bar.disabled {
+    opacity: 0.5;            
+    cursor: not-allowed;    
+    pointer-events: none;     
+}
+
+/* Khi nhạc tự chạy */
+.progress-fill, .progress-handle {
+    transition: width 0.1s linear, left 0.1s linear;
+}
+
+/* Khi đang kéo: Xóa bỏ transition */
+.progress-bar.is-dragging .progress-fill,
+.progress-bar.is-dragging .progress-handle {
+    transition: none !important;
+}
+
 .progress-bar,
 .volume-bar {
     position: relative;
@@ -896,6 +920,22 @@
 .progress-bar:hover .progress-handle,
 .volume-bar:hover .volume-handle {
     opacity: 1;
+}
+
+/* Mặc định: Ẩn icon loa dấu X đi */
+.btn-volume .icon-mute {
+    display: none;
+}
+.btn-volume .icon-speaker {
+    display: inline-block;
+}
+
+/* Khi nút có class .is-muted (trạng thái tắt tiếng) */
+.btn-volume.is-muted .icon-speaker {
+    display: none;       /* Ẩn loa thường */
+}
+.btn-volume.is-muted .icon-mute {
+    display: inline-block; /* Hiện loa dấu X */
 }
 
 /* User avatar */
@@ -1416,4 +1456,9 @@
     overflow: hidden;
     text-overflow: ellipsis;
     font-weight: 400;
+}
+
+.control-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }

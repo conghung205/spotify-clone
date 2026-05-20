@@ -14,9 +14,9 @@ async function initAlbumPage(albumId) {
     const btnShuffle = document.querySelector("#btn-shuffle-album");
     const btnAddPlaylist = document.querySelector("#btn-add-playlist");
 
-    btnShuffle.addEventListener("click", () => {
-        btnShuffle.classList.toggle("active");
-    });
+    // btnShuffle.addEventListener("click", () => {
+    //     btnShuffle.classList.toggle("active");
+    // });
     btnAddPlaylist.addEventListener("click", () => {
         btnAddPlaylist.classList.toggle("active");
     });
@@ -47,11 +47,9 @@ async function initAlbumPage(albumId) {
 
         if (!trackItem) return;
 
-        const index = trackItem.dataset.index;
+        const index = Number(trackItem.dataset.index);
 
-        const track = tracksList[index];
-
-        playTrack(track);
+        playTrack(tracksList, index);
     });
 }
 

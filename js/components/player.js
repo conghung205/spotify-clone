@@ -9,9 +9,9 @@ function player() {
             />
             <div class="player-info">
                 <div class="player-title">
-                    Yêu Một Người Sao Buồn Đến Thế
+                    Chưa phát nhạc
                 </div>
-                <div class="player-artist">Noo Phước Thịnh</div>
+                <div class="player-artist">Unknown artist</div>
             </div>
             <button class="add-btn">
                 <i class="fa-solid fa-plus"></i>
@@ -20,11 +20,11 @@ function player() {
 
         <div class="player-center">
             <div class="player-controls">
-                <button class="control-btn active">
+                <button class="control-btn btn-shuffle">
                     <i class="fas fa-random"></i>
                     <span class="tooltip">Enable shuffle</span>
                 </button>
-                <button class="control-btn">
+                <button class="control-btn prev-btn">
                     <i class="fas fa-step-backward"></i>
                     <span class="tooltip">Previous</span>
                 </button>
@@ -32,22 +32,22 @@ function player() {
                     <i class="fa-solid fa-play"></i>
                     <span class="tooltip">Play</span>
                 </button>
-                <button class="control-btn">
+                <button class="control-btn next-btn">
                     <i class="fas fa-step-forward"></i>
                     <span class="tooltip">Next</span>
                 </button>
-                <button class="control-btn">
+                <button class="control-btn btn-repeat">
                     <i class="fas fa-redo"></i>
                     <span class="tooltip">Enable repeat</span>
                 </button>
             </div>
             <div class="progress-container">
-                <span class="time time-start">0:52</span>
+                <span class="time time-start">00:00</span>
                 <div class="progress-bar">
                     <div class="progress-fill"></div>
                     <div class="progress-handle"></div>
                 </div>
-                <span class="time time-end">4:59</span>
+                <span class="time time-end">00:00</span>
             </div>
         </div>
 
@@ -56,8 +56,9 @@ function player() {
                 <i class="fas fa-microphone"></i>
             </button>
             <div class="volume-container">
-                <button class="control-btn">
-                    <i class="fas fa-volume-down"></i>
+                <button class="control-btn btn-volume">
+                    <i class="icon-speaker fas fa-volume-down"></i>
+                    <i class="icon-mute fa-solid fa-volume-xmark"></i>
                 </button>
                 <div class="volume-bar">
                     <div class="volume-fill" style="width: 70%"></div>

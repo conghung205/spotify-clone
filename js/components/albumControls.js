@@ -5,7 +5,7 @@ function albumControls() {
             <button class="play-btn-large">
                 <i class="fas fa-play"></i>
             </button>
-            <button id="btn-shuffle-album" class="control-btn-large">
+            <button class="control-btn-shuffle-large btn-shuffle">
                 <i class="bi bi-shuffle"></i>
             </button>
             <button id="btn-add-playlist" class="control-btn-large">

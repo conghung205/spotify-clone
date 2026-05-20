@@ -1,0 +1,94 @@
+// Biến lưu trữ âm lượng trước khi mute (mặc định là 1 nếu chưa kéo lần nào)
+let lastVolume = 1.0;
+
+export function initMuteToggle(volumeBtn, audio) {
+    // 1. Lắng nghe sự kiện click vào nút loa
+    volumeBtn.addEventListener("click", () => {
+        if (audio.volume > 0) {
+            // Nếu đang có tiếng -> Lưu lại mức âm lượng hiện tại và tắt tiếng (về 0)
+            lastVolume = audio.volume;
+            audio.volume = 0;
+        } else {
+            // Nếu đang tắt tiếng -> Trả lại mức âm lượng trước đó
+            // Phòng trường hợp lastVolume bị bằng 0 thì mặc định trả về 0.5
+            audio.volume = lastVolume > 0 ? lastVolume : 0.5;
+        }
+    });
+
+    // 2. Lắng nghe sự kiện đổi âm lượng để tự động ĐỔI ICON
+    audio.addEventListener("volumechange", () => {
+        if (audio.volume === 0) {
+            // Thêm class biểu thị trạng thái tắt tiếng
+            volumeBtn.classList.add("is-muted");
+        } else {
+            // Xóa class tắt tiếng khi có âm lượng trở lại
+            volumeBtn.classList.remove("is-muted");
+        }
+    });
+}
+
+export function initVolumeControl(
+    volumeBar,
+    volumeFill,
+    volumeHandle,
+    audio,
+    getIsDraggingVolume,
+    setIsDraggingVolume,
+) {
+    const updateVolumeOnEvent = (e) => {
+        const rect = volumeBar.getBoundingClientRect();
+        let offsetX = e.clientX - rect.left;
+
+        // Giới hạn trong phạm vi thanh volume
+        if (offsetX < 0) offsetX = 0;
+        if (offsetX > rect.width) offsetX = rect.width;
+
+        return offsetX / rect.width; // Trả về giá trị từ 0 đến 1
+    };
+
+    // 1. Nhấn chuột / Chạm tay vào thanh volume
+    volumeBar.addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        setIsDraggingVolume(true);
+        volumeBar.classList.add("is-dragging");
+        volumeBar.setPointerCapture(e.pointerId);
+
+        const volumeLevel = updateVolumeOnEvent(e);
+        audio.volume = volumeLevel; // Cập nhật trực tiếp vào audio element
+    });
+
+    // 2. Đang kéo di chuyển
+    volumeBar.addEventListener("pointermove", (e) => {
+        if (!getIsDraggingVolume()) return;
+
+        const volumeLevel = updateVolumeOnEvent(e);
+        audio.volume = volumeLevel;
+    });
+
+    // 3. Thả chuột / Rời tay
+    volumeBar.addEventListener("pointerup", (e) => {
+        if (!getIsDraggingVolume()) return;
+        setIsDraggingVolume(false);
+        volumeBar.classList.remove("is-dragging");
+        volumeBar.releasePointerCapture(e.pointerId);
+
+        const volumeLevel = updateVolumeOnEvent(e);
+        audio.volume = volumeLevel;
+        if (volumeLevel > 0) lastVolume = volumeLevel;
+    });
+
+    // 4. Bị ngắt quãng phòng hờ
+    volumeBar.addEventListener("pointercancel", (e) => {
+        if (!getIsDraggingVolume()) return;
+        setIsDraggingVolume(false);
+        volumeBar.classList.remove("is-dragging");
+        volumeBar.releasePointerCapture(e.pointerId);
+    });
+
+    // 5. Đồng bộ UI khi giá trị audio.volume thay đổi (Bắt buộc phải có)
+    audio.addEventListener("volumechange", () => {
+        const percent = audio.volume * 100;
+        volumeFill.style.width = `${percent}%`;
+        volumeHandle.style.left = `${percent}%`;
+    });
+}

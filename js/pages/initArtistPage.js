@@ -26,11 +26,9 @@ async function initArtistPage(artistId) {
 
         if (!trackItem) return;
 
-        const index = trackItem.dataset.index;
+        const index = Number(trackItem.dataset.index);
 
-        const track = tracksList[index];
-
-        playTrack(track);
+        playTrack(tracksList, index);
     });
 }
 export default initArtistPage;

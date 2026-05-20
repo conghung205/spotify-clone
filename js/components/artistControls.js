@@ -5,7 +5,7 @@ function artistControls() {
             <button class="play-btn-large">
                 <i class="fas fa-play"></i>
             </button>
-            <button class="control-btn-large">
+            <button class="control-btn-shuffle-large btn-shuffle">
                 <i class="bi bi-shuffle"></i>
             </button>
             <button class="btn-fllow-artist">
