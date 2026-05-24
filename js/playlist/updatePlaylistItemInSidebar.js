@@ -5,8 +5,6 @@ export function updatePlaylistItemInSidebar(playlist) {
         `.library-item[data-id="${playlist.id}"]`,
     );
 
-    console.log(item);
-
     if (item) {
         item.outerHTML = renderPlaylistItem(playlist);
     }

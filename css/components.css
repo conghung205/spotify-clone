@@ -1681,3 +1681,103 @@
 .playlist-image-wrapper:hover button{
     display: block;
 }
+
+/* context menu */
+.playlist-context-menu{
+    position: fixed;
+    z-index: 9999;
+}
+
+.playlist-context-menu{
+    border-radius: 4px;
+    background-color: #3a3a3a;
+    display: flex;
+    flex-direction: column;
+    min-width: 120px;
+    max-width: 220px;
+}
+.context-item{
+    padding: 10px 20px;
+    font-weight: 600;
+    color: #9e9d9f;
+}
+.context-item:hover{
+    border-radius: 4px;
+    color: #f0f0f0;
+    background-color: #484848;
+}
+
+
+.rename-modal-overlay {
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999;
+    opacity: 0; 
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.rename-modal-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.rename-modal-content {
+    background: #282828; 
+    color: #fff; 
+    padding: 24px;
+    border-radius: 8px; 
+    width: 370px; 
+    min-width: 300px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.rename-playlist-input {
+    width: 100%; 
+    padding: 10px; 
+    margin: 16px 0;
+    background: #3e3e3e; 
+    border: 1px solid transparent; 
+    border-radius: 4px;
+    color: #fff; 
+    outline: none; 
+    box-sizing: border-box;
+}
+
+.rename-playlist-input:focus { 
+    background-color: var(--bg-hover);
+    outline: 2px solid var(--text-primary);
+}
+
+.rename-modal-actions {
+    display: flex; 
+    justify-content: flex-end; 
+    gap: 12px; }
+
+.rename-modal-actions button {
+    padding: 8px 16px; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-weight: bold;
+}
+.btn-rename-cancel { 
+    background: transparent; 
+    color: #b3b3b3; 
+}
+.btn-rename-cancel:hover { 
+    color: #fff; 
+}
+.btn-rename-save { 
+    background: var(--bg-secondary);
+    color: #b7b6b6; 
+}
+.btn-rename-save:hover { 
+    background-color: var(--bg-primary);
+    color: #fff;
+}

@@ -15,3 +15,6 @@ export async function createPlaylist(data) {
 export async function getMyPlaylists() {
     return await httpRequest.get("/me/playlists");
 }
+export async function deletePlaylist(id) {
+    return await httpRequest.del(`/playlists/${id}`);
+}

@@ -11,7 +11,7 @@ async function initPlaylistPage(playlistId) {
 
     contentContainer.innerHTML = playlistPage(playlist);
 
-    initPlaylistHeader();
+    initPlaylistHeader(playlist);
     initPlaylistModal(playlist);
     syncSidebarActiveState();
 }

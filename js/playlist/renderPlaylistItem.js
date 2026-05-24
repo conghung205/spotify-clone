@@ -3,6 +3,7 @@ function renderPlaylistItem(playlist) {
         <div
             class="library-item"
             data-id="${playlist.id}"
+            
         >
             <img
                 src="${playlist.image_url || "placeholder.svg?height=48&width=48"}"

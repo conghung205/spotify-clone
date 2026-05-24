@@ -2,6 +2,7 @@ import sideBar from "../components/sidebar.js";
 import header from "../components/header.js";
 import player from "../components/player.js";
 import authModal from "../components/authModal.js";
+import renameModal from "../components/renameModal.js";
 function mainLayout() {
     return `
     <div class="app-container">
@@ -21,6 +22,8 @@ function mainLayout() {
         ${player()}
 
         ${authModal()}
+        ${renameModal()}
+
         <!-- Toast message -->
         <div id="toast"></div>
     </div>`;
