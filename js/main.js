@@ -4,6 +4,8 @@ import { initAuth } from "./auth/initAuth.js";
 import router from "./routes/router.js";
 import mainLayout from "./layout/mainLayout.js";
 import initPlayerControls from "./player/initPlayerControls.js";
+import initCreatePlaylist from "./playlist/initCreatePlaylist.js";
+import initLibrary from "./playlist/initLibrary.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     //render
@@ -16,6 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
     initAuthModal();
     initUserDropdown();
     initPlayerControls();
+    initCreatePlaylist();
+    initLibrary();
 
     router();
     window.addEventListener("hashchange", router);

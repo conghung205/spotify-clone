@@ -1,6 +1,7 @@
 import initHomePage from "../pages/initHomePage.js";
 import initAlbumPage from "../pages/initAlbumPage.js";
 import initArtistPage from "../pages/initArtistPage.js";
+import initPlaylistPage from "../pages/initPlaylistPage.js";
 
 function router() {
     const hash = window.location.hash || "#/";
@@ -25,6 +26,12 @@ function router() {
         const artistId = parts[2];
 
         initArtistPage(artistId);
+    } else if (hash.startsWith("#/playlists/")) {
+        const parts = hash.split("/");
+
+        const playlistId = parts[2];
+
+        initPlaylistPage(playlistId);
     }
 }
 
