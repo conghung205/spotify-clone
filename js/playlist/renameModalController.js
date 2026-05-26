@@ -19,20 +19,20 @@ export function openRenameModal(playlistId, currentName, onSuccessCallback) {
         btnCancel.onclick = null;
     };
 
-    // Xử lý nút Save
+    // Save
     btnSave.onclick = async () => {
         const newName = input.value.trim();
 
         if (!newName) return;
 
-        // Nếu không thay đổi gì thì chỉ việc đóng modal
+        // Nếu không thay đổi gì thì đóng modal
         if (newName === currentName) {
             closeRenameModal();
             return;
         }
 
         try {
-            // Gọi API lưu tên mới lên server (Bạn sửa đúng tham số API thực tế của bạn)
+            // Gọi API lưu tên mới lên server
             await updatePlaylist(playlistId, { name: newName });
 
             // Bắn dữ liệu về cho nơi gọi để update UI

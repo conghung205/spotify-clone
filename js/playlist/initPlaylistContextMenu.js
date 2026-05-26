@@ -27,7 +27,7 @@ function initPlaylistContextMenu() {
             name: nameEl ? nameEl.textContent.trim() : "",
         };
 
-        // Truyền thêm cả thẻ `nameEl` vào hàm để lát nữa đổi chữ trực tiếp
+        // Truyền thêm thẻ `nameEl` vào hàm để đổi chữ trực tiếp
         initMenuActions(menu, playlist, nameEl);
     });
 
@@ -55,7 +55,6 @@ function initMenuActions(menu, playlist, nameEl) {
 
             const hash = window.location.hash;
             if (hash === `#/playlists/${playlist.id}`) {
-                // Bạn thay class chuẩn tiêu đề lớn trên trang playlist của bạn vào đây nhé
                 const headerTitle = document.querySelector(".playlist-title");
                 if (headerTitle) headerTitle.textContent = newVersionName;
             }
