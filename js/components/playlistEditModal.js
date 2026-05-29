@@ -1,4 +1,10 @@
 function playlistEditModal(playlist) {
+    // Bộ lọc kiểm tra ảnh hợp lệ
+    const hasImage =
+        playlist.image_url &&
+        playlist.image_url !== "null" &&
+        playlist.image_url !== "";
+
     return `
     <div class="modal-overlay" id="playlist-modal">
         <div class="modal-container playlist-modal-container">
@@ -19,11 +25,19 @@ function playlistEditModal(playlist) {
                             <div class="playlist-form-none-image">
                                 <button type="button"><i class="fa-brands fa-itunes-note"></i></button>
                             </div>
-                           <img
-                                class="playlist-preview-image"
-                                src="${playlist.image_url || ""}"
-                                alt=""
-                            />
+
+                            ${
+                                hasImage
+                                    ? `
+                                <img
+                                    class="playlist-preview-image"
+                                    src="${playlist.image_url}"
+                                    alt=""
+                                />
+                            `
+                                    : ""
+                            }
+
                             <div class="playlist-image-hover">
                                 <div class="playlist-image-hover-content">
                                     <i class="bi bi-pencil"></i>
@@ -36,12 +50,13 @@ function playlistEditModal(playlist) {
                             <input
                                 type="text"
                                 class="playlist-name-input"
+                                value="${playlist.name || ""}"
                             />
 
                             <textarea
                                 class="playlist-description-input"
                                 placeholder="Add an optional description"
-                            ></textarea>
+                            >${playlist.description || ""}</textarea>
                         </div>
                     </div>
 

@@ -2,10 +2,10 @@ function emptyPlaylistControls() {
     return `
     <section class="container-playlist-controls">
         <div class="album-controls">
-            <button class="control-btn-shuffle-large btn-shuffle">
+            <button class="control-btn-userPlus">
                 <i class="fa-solid fa-user-plus"></i>
             </button>
-            <button id="btn-add-playlist" class="control-btn-large">
+            <button id="btn-options-playlist" class="control-btn-large">
                <i class="fa-solid fa-ellipsis"></i>
             </button>
         </div>

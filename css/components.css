@@ -178,6 +178,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 8px;
     margin-bottom: var(--spacing-md);
 }
 /* Search library */
@@ -191,8 +192,8 @@
 }
 
 .search-library-btn {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     border-radius: var(--radius-full);
     background-color: transparent;
     color: var(--text-secondary);
@@ -205,7 +206,7 @@
     position: absolute;
     background-color: var(--bg-active);
     color: #fff;
-    padding: 0 8px 0 0;
+    font-size: 12px;
     inset: 0;
     top: 0;
     left: 30px;
@@ -228,11 +229,8 @@
 }
 
 .sort-btn {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-sm);
-    background-color: transparent;
     color: var(--text-secondary);
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
     transition: all var(--transition-fast);
     display: flex;
@@ -758,6 +756,7 @@
 }
 
 /* Player Controls */
+.control-btn-userPlus,
 .control-btn-shuffle-large,
 .control-btn-large,
 .control-btn {
@@ -771,6 +770,7 @@
     justify-content: center;
     transition: all var(--transition-fast);
 }
+.control-btn-userPlus,
 .control-btn-shuffle-large,
 .control-btn-large{
     font-size: 32px;
@@ -939,12 +939,31 @@
     display: inline-block;
 }
 
-/* Khi nút có class .is-muted (trạng thái tắt tiếng) */
+
 .btn-volume.is-muted .icon-speaker {
-    display: none;       /* Ẩn loa thường */
+    display: none;  
 }
 .btn-volume.is-muted .icon-mute {
-    display: inline-block; /* Hiện loa dấu X */
+    display: inline-block; 
+}
+
+
+.btn-volume:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none; 
+}
+
+
+.volume-bar.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none; 
+}
+
+
+.volume-bar.disabled .volume-handle {
+    display: none; 
 }
 
 /* User avatar */
@@ -1216,13 +1235,14 @@
     gap: 6px;
     cursor: pointer;
     padding: 4px 8px;
-    border: 1px solid #c4efd9;
+    border: 1px solid var(--border-color);
     border-radius: 10px;
 }
 .user-name{
     user-select: none;
     font-size: 18px;
     font-weight: 600;
+    color: #e0e0e0;
 }
 
 /* User Dropdown */
@@ -1471,7 +1491,14 @@
     opacity: 0.5;
     cursor: not-allowed;
 }
-
+.play-btn-large:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.control-btn-shuffle-large:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 /* play list page */
 .playlist-header-container{
     padding-bottom: 28px;
@@ -1542,8 +1569,7 @@
     color: #b7b6b6;
 }
 .playlist-search{
-    border-top: 1px solid var(--border-color);
-    padding: 24px;
+    padding: 12px 36px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1562,7 +1588,13 @@
     margin-bottom: 16px;
 }
 .playlist-content{
-    padding: 0 24px;
+    padding: 24px;
+    /* margin-bottom: 24px; */
+    border-bottom: 1px solid var(--border-color);
+}
+.no-songs{
+    text-align: center;
+    color: #b7b6b6;
 }
 
 .playlist-modal{
@@ -1780,4 +1812,273 @@
 .btn-rename-save:hover { 
     background-color: var(--bg-primary);
     color: #fff;
+}
+
+.search-track-item{
+    display: flex;
+}
+.search-or-recommended-section{
+    position: relative;
+}
+.btn-find-more{
+    position: absolute;
+    right: 0;
+    padding: 20px 20px 0 20px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #b7b6b6;
+    cursor: pointer;
+}
+.btn-find-more:hover{
+    color: #eaeaea;
+}
+
+.recommended-wrapper { 
+    padding: 20px; 
+}
+.recommended-title { 
+    font-size: 1.5rem; 
+    font-weight: 700; 
+    color: #fff; 
+    margin: 0 0 4px 0; 
+}
+.recommended-subtitle { 
+    color: #b3b3b3; 
+    font-size: 0.85rem; 
+    margin-bottom: 16px; 
+}
+.suggest-tracks-list { 
+    display: flex; 
+    flex-direction: 
+    column; 
+    gap: 8px; 
+}
+
+.search-results-list{
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+    padding: 0 20px;
+}
+.main-playlist-track-title{
+    font-size: 14px;
+    color: var(--text-secondary);
+    display: flex;
+    justify-content: space-between;
+}
+
+.track-artist{
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+
+/* ================================ */
+/* ==========================================================================
+   BỘ STYLE TABLE 5 CỘT (ẢNH + CHỮ CHUNG TD)
+   ========================================================================== */
+
+.playlist-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    user-select: none;
+    margin-top: var(--spacing-lg);
+}
+
+/* Row Tiêu đề */
+.playlist-th-row {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.playlist-th-row th {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-weight: 400;
+}
+
+/* Định dạng các ô td dữ liệu chung */
+.playlist-tbody td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    vertical-align: middle;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* --- CĂN TỶ LỆ 5 CỘT THẲNG HÀNG --- */
+.pl-th-number, .pl-cell-number { width: 50px; text-align: center; }
+.pl-th-title, .pl-cell-title { width: auto; } /* Ô này tự giãn rộng tối đa */
+.pl-th-date, .pl-cell-date { 
+    width: 20%; 
+    color: var(--text-secondary);
+}
+.pl-th-duration, .pl-cell-duration { width: 80px; text-align: center; }
+.pl-th-menu, .pl-cell-menu { width: 60px; text-align: center; }
+
+/* --- FLEXBOX CHO CỤM ẢNH + CHỮ TRONG CÙNG TD --- */
+.pl-title-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    overflow: hidden;
+}
+
+/* Khung ảnh nhỏ xinh */
+.pl-image {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+}
+
+.pl-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    display: block;
+}
+
+/* Khối chữ thông tin bài hát */
+.pl-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow: hidden;
+}
+
+.pl-name {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pl-artist {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* Nút tùy chọn ba chấm */
+.pl-menu-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background-color: transparent;
+    border: none;
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: all var(--transition-fast);
+}
+
+/* --- HOVER EFFECTS --- */
+.playlist-row {
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition-fast);
+}
+
+.playlist-row:hover {
+    background-color: var(--bg-tertiary);
+}
+
+.playlist-row:hover .pl-cell-date,
+.playlist-row:hover .pl-cell-number,
+.playlist-row:hover .pl-cell-plays,
+.playlist-row:hover .pl-cell-duration {
+    color: var(--text-primary);
+}
+
+.playlist-row:hover .pl-menu-btn {
+    opacity: 1;
+}
+
+.pl-menu-btn:hover {
+    color: var(--text-primary);
+    transform: scale(1.04);
+}
+
+
+.context-menu {
+    position: absolute;
+    background-color: #282828; 
+    border-radius: var(--radius-sm, 4px);
+    box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3), 0 6px 8px rgba(0, 0, 0, 0.2);
+    min-width: 200px;
+    z-index: 9999;
+    padding: 4px;
+    display: none; 
+}
+
+.context-menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.context-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    color: #eaeaea;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: var(--radius-xs, 2px);
+    transition: background-color var(--transition-fast, 0.2s);
+}
+
+.context-menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.context-menu-item.delete-track-action:hover{
+    background-color: #e91429; 
+    color: #fff;
+    
+}
+
+
+/* ======================== Active tracks playlist ================== */
+.playlist-row .pl-cell-number .playing-icon {
+    display: none;
+    color: #1db954; 
+}
+
+.playlist-row.playing .pl-cell-number .track-num-text {
+    display: none;
+}
+
+.playlist-row.playing .pl-cell-number .playing-icon {
+    display: inline-block;
+}
+
+.playlist-row.playing .pl-name {
+    color: #1db954 !important;
+    font-weight: 600;
+}
+.playlist-row.playing {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.no-results-message{
+    font-size: 14px;
+    text-align: center;
+    color: #b3b3b3;
+    display: none;
+    overflow: visible;         
+    word-break: break-word;    
+    white-space: normal;        
+    height: auto;              
+    max-height: none;           
+    padding: 16px 12px;
 }

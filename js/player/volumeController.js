@@ -1,9 +1,10 @@
-// Biến lưu trữ âm lượng trước khi mute (mặc định là 1 nếu chưa kéo lần nào)
+// mặc định là 1
 let lastVolume = 1.0;
 
 export function initMuteToggle(volumeBtn, audio) {
-    // 1. Lắng nghe sự kiện click vào nút loa
     volumeBtn.addEventListener("click", () => {
+        if (volumeBtn.disabled) return;
+
         if (audio.volume > 0) {
             // Nếu đang có tiếng -> Lưu lại mức âm lượng hiện tại và tắt tiếng (về 0)
             lastVolume = audio.volume;
@@ -48,6 +49,8 @@ export function initVolumeControl(
 
     // 1. Nhấn chuột / Chạm tay vào thanh volume
     volumeBar.addEventListener("pointerdown", (e) => {
+        if (volumeBar.classList.contains("disabled")) return;
+
         e.preventDefault();
         setIsDraggingVolume(true);
         volumeBar.classList.add("is-dragging");

@@ -1,23 +1,18 @@
 import audio from "./audio.js";
+import { syncUIState } from "../utils/syncUIState.js";
 
 function togglePlay() {
-    const allPlayButtons = document.querySelectorAll(
-        ".play-btn, .play-btn-large",
-    );
+    // Nếu chưa có nguồn nhạc thì không làm gì cả
+    if (!audio.src || audio.src === window.location.href) return;
 
     if (audio.paused) {
         audio.play();
-
-        allPlayButtons.forEach((btn) => {
-            btn.innerHTML = '<i class="fas fa-pause"></i>';
-        });
     } else {
         audio.pause();
-
-        allPlayButtons.forEach((btn) => {
-            btn.innerHTML = '<i class="fas fa-play"></i>';
-        });
     }
+
+    // Gọi hàm đồng bộ lại icon cho tất cả các nút lớn/nhỏ đang có trên màn hình
+    syncUIState();
 }
 
 export default togglePlay;

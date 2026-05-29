@@ -17,6 +17,8 @@ export function showAuthButtons() {
 }
 
 export function updateCurrentUser(user) {
+    console.log(user);
+
     const userName = document.querySelector("#user-name");
 
     const userAvatar = document.querySelector("#user-avatar");
@@ -26,6 +28,6 @@ export function updateCurrentUser(user) {
     }
 
     if (user.email) {
-        userName.textContent = user.email;
+        userName.textContent = user.display_name || user.email;
     }
 }

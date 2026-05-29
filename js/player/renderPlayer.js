@@ -5,9 +5,17 @@ function renderPlayer(track) {
     const artist = document.querySelector(".player-artist");
     const timeEnd = document.querySelector(".time-end");
 
-    image.src = track.image_url;
-    title.textContent = track.title;
-    artist.textContent = track.artist_name;
-    timeEnd.textContent = formatDuration(track.duration);
+    const trackTitle = track.track_title || track.title || "Unknown Title";
+    const trackImage =
+        track.track_image_url ||
+        track.image_url ||
+        track.album_cover_image_url ||
+        "";
+    const trackDuration = track.track_duration || track.duration || 0;
+
+    if (image) image.src = trackImage;
+    if (title) title.textContent = trackTitle;
+    if (artist) artist.textContent = track.artist_name || "Unknown Artist";
+    if (timeEnd) timeEnd.textContent = formatDuration(trackDuration);
 }
 export default renderPlayer;

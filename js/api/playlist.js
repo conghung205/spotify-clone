@@ -18,3 +18,13 @@ export async function getMyPlaylists() {
 export async function deletePlaylist(id) {
     return await httpRequest.del(`/playlists/${id}`);
 }
+
+export async function getPlaylistTracks(id) {
+    return await httpRequest.get(`/playlists/${id}/tracks`);
+}
+export async function addTracktoPlaylist(id, data) {
+    return await httpRequest.post(`/playlists/${id}/tracks`, data);
+}
+export async function removeTrackFromPlaylist(playlistId, trackId) {
+    return await httpRequest.del(`/playlists/${playlistId}/tracks/${trackId}`);
+}

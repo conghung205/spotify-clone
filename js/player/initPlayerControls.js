@@ -12,6 +12,7 @@ import {
 } from "./playlistController.js";
 
 import { initVolumeControl, initMuteToggle } from "./volumeController.js";
+import { syncUIState } from "../utils/syncUIState.js";
 
 function initPlayerControls() {
     const playBtn = document.querySelector(".play-btn");
@@ -65,13 +66,7 @@ function initPlayerControls() {
     volumeHandle.style.left = "100%";
 
     // disable ban đầu cho UI
-    playBtn.disabled = true;
-    nextBtn.disabled = true;
-    prevBtn.disabled = true;
-    btnShuffle.disabled = true;
-    btnRepeat.disabled = true;
-
-    progressBar.classList.add("disabled");
+    syncUIState();
 
     timeStart.textContent = formatDuration(0);
     progressFill.style.width = "0";
@@ -79,9 +74,17 @@ function initPlayerControls() {
 
     // EventListener
     document.addEventListener("click", (e) => {
-        if (e.target.closest(".play-btn, .play-btn-large")) togglePlay();
-        if (e.target.closest(".btn-shuffle")) toggleShuffle();
-        if (e.target.closest(".btn-repeat")) toggleRepeat();
+        if (e.target.closest(".play-btn, .play-btn-large")) {
+            togglePlay();
+            syncUIState();
+        }
+        if (e.target.closest(".btn-shuffle")) {
+            toggleShuffle();
+            syncUIState();
+        }
+        if (e.target.closest(".btn-repeat")) {
+            toggleRepeat();
+        }
     });
 
     prevBtn.addEventListener("click", handlePrevTrack);

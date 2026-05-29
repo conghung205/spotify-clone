@@ -3,10 +3,13 @@ import artistPage from "./artistPage.js";
 import artistHero from "../components/artistHero.js";
 import artistTracks from "../components/artistTracks.js";
 import playTrack from "../player/playTrack.js";
+import { syncUIState } from "../utils/syncUIState.js";
 
 async function initArtistPage(artistId) {
     const contentContainer = document.getElementById("content-container");
     contentContainer.innerHTML = artistPage();
+
+    syncUIState();
 
     const heroContainer = document.querySelector(".hero-artist-container");
     const tracksContainer = document.querySelector(".artist-tracks-container");

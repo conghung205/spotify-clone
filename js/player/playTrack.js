@@ -14,42 +14,53 @@ function playTrack(playlist, index) {
     renderPlayer(track);
 
     // enable controls
-    const playBtn = document.querySelector(".play-btn");
-    const playBtnLarge = document.querySelector(".play-btn-large");
-    const nextBtn = document.querySelector(".next-btn");
+    const allPlayButtons = document.querySelectorAll(
+        ".play-btn, .play-btn-large",
+    );
+    const allShuffleButtons = document.querySelectorAll(".btn-shuffle");
     const prevBtn = document.querySelector(".prev-btn");
-    const btnShuffles = document.querySelectorAll(".btn-shuffle");
+    const nextBtn = document.querySelector(".next-btn");
     const btnRepeat = document.querySelector(".btn-repeat");
     const progressBar = document.querySelector(".progress-bar");
+    const volumeBtn = document.querySelector(".btn-volume");
+    const volumeBar = document.querySelector(".volume-bar");
 
-    playBtn.disabled = false;
-    nextBtn.disabled = false;
-    prevBtn.disabled = false;
-    btnShuffles.forEach((btnShuffle) => (btnShuffle.disabled = false));
-    btnRepeat.disabled = false;
-    progressBar.classList.remove("disabled");
+    allPlayButtons.forEach((btn) => (btn.disabled = false));
+    allShuffleButtons.forEach((btn) => (btn.disabled = false));
+    if (prevBtn) prevBtn.disabled = false;
+    if (nextBtn) nextBtn.disabled = false;
+    if (btnRepeat) btnRepeat.disabled = false;
+    if (progressBar) progressBar.classList.remove("disabled");
+    if (volumeBtn) volumeBtn.disabled = false;
+    if (volumeBar) volumeBar.classList.remove("disabled");
 
-    if (playBtn) {
-        playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-    }
-    if (playBtnLarge) {
-        playBtnLarge.innerHTML = '<i class="fas fa-pause"></i>';
-    }
+    allPlayButtons.forEach((btn) => {
+        btn.innerHTML = '<i class="fas fa-pause"></i>';
+    });
 
     updateActiveTrack();
 }
 
 function updateActiveTrack() {
-    document.querySelectorAll(".track-item.playing").forEach((item) => {
-        item.classList.remove("playing");
-    });
+    document
+        .querySelectorAll(".track-item.playing, .playlist-row.playing")
+        .forEach((item) => {
+            item.classList.remove("playing");
+        });
 
-    const currentTrackElement = document.querySelector(
+    const currentTrackItem = document.querySelector(
         `.track-item[data-index="${currentIndex}"]`,
     );
+    if (currentTrackItem) {
+        currentTrackItem.classList.add("playing");
+    }
 
-    if (currentTrackElement) {
-        currentTrackElement.classList.add("playing");
+    const currentPlaylistRow = document.querySelector(
+        `.playlist-row[data-index="${currentIndex}"]`,
+    );
+    if (currentPlaylistRow) {
+        currentPlaylistRow.classList.add("playing");
     }
 }
+
 export default playTrack;

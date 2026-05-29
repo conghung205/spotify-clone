@@ -22,20 +22,19 @@ function sideBar() {
             </div>
 
             <div class="header-library">
-                <div class="search-library show">
+                <div class="search-library">
                     <button class="search-library-btn">
                         <i class="fas fa-search"></i>
                     </button>
                     <input
                         type="text"
-                        placeholder="search your library"
+                        placeholder="search your library..."
                         class="search"
                     />
                 </div>
 
                 <div class="box-sort">
                     <button class="sort-btn">
-                        Recents
                         <i class="fas fa-list"></i>
                     </button>
                     <div class="sort-options">
@@ -75,7 +74,9 @@ function sideBar() {
                 </div>
             </div>
 
-            <div class="library-content"></div>
+            <div class="library-content">
+                <div class="no-results-message"></div>
+            </div>
         </nav>
     </aside>`;
 }

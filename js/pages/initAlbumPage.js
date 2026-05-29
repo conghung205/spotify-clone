@@ -3,20 +3,21 @@ import albumPage from "./albumPage.js";
 import albumHero from "../components/albumHero.js";
 import albumTracks from "../components/albumTracks.js";
 import playTrack from "../player/playTrack.js";
+import { syncUIState } from "../utils/syncUIState.js";
 
 async function initAlbumPage(albumId) {
     const contentContainer = document.getElementById("content-container");
 
     contentContainer.innerHTML = albumPage();
 
+    syncUIState();
+
     // options display
     const options = document.querySelector(".options");
     const btnShuffle = document.querySelector("#btn-shuffle-album");
     const btnAddPlaylist = document.querySelector("#btn-add-playlist");
 
-    // btnShuffle.addEventListener("click", () => {
-    //     btnShuffle.classList.toggle("active");
-    // });
+
     btnAddPlaylist.addEventListener("click", () => {
         btnAddPlaylist.classList.toggle("active");
     });

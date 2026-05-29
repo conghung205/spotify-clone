@@ -8,7 +8,7 @@ export function closePlaylistModal() {
     if (modal) modal.classList.remove("show");
 }
 
-// Thiết lập các sự kiện đóng modal cơ bản (Click ngoài vùng, nút đóng, phím ESC)
+// Click ngoài vùng, nút đóng, phím ESC
 export function setupModalCloseEvents(modal, btnCloseModal) {
     modal.addEventListener("click", (e) => {
         if (e.target === modal) closePlaylistModal();

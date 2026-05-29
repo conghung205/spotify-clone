@@ -16,21 +16,22 @@ function initPlaylistModal(playlist) {
     const playlistName = modal.querySelector(".playlist-name-input");
     const playlistDesc = modal.querySelector(".playlist-description-input");
     const playlistImageInput = modal.querySelector(".playlist-image-input");
-    const previewImage = modal.querySelector(".playlist-preview-image");
     const playlistForm = modal.querySelector(".playlist-form");
 
     // Khởi tạo giá trị ban đầu cho Form
-    const DEFAULT_PLAYLIST_IMAGE = "path/to/your/default-playlist-cover.png";
+
     playlistName.value = playlist.name;
     playlistDesc.value = playlist.description;
-    previewImage.src = playlist.image_url;
 
-    if (playlist.image_url) {
+    let previewImage = modal.querySelector(".playlist-preview-image");
+
+    if (playlist.image_url && playlist.image_url !== "null") {
         playlistImage.classList.add("has-image");
+
+        if (previewImage) previewImage.src = playlist.image_url;
     } else {
         playlistImage.classList.remove("has-image");
     }
-
     let selectedFile = null;
 
     // Gán các sự kiện đóng modal cơ bản từ controller
@@ -42,7 +43,7 @@ function initPlaylistModal(playlist) {
         if (e.target !== playlistImageInput) playlistImageInput.click();
     });
 
-    // Sự kiện lắng nghe khi người dùng chọn ảnh mới để Preview
+    // Preview Image
     playlistImageInput.addEventListener("change", (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -50,7 +51,19 @@ function initPlaylistModal(playlist) {
         selectedFile = file;
         const reader = new FileReader();
         reader.onload = (event) => {
-            previewImage.src = event.target.result;
+            let currentPreviewImg = modal.querySelector(
+                ".playlist-preview-image",
+            );
+
+            if (!currentPreviewImg) {
+                currentPreviewImg = document.createElement("img");
+                currentPreviewImg.className = "playlist-preview-image";
+                currentPreviewImg.alt = "";
+
+                playlistImage.appendChild(currentPreviewImg);
+            }
+
+            currentPreviewImg.src = event.target.result;
             playlistImage.classList.add("has-image");
         };
         reader.readAsDataURL(file);
@@ -82,8 +95,7 @@ function initPlaylistModal(playlist) {
             selectedFile = null;
             closePlaylistModal();
         } catch (error) {
-            console.error("=== LỖI TRONG QUY TRÌNH ===");
-            console.error("Chi tiết lỗi:", error.response || error.message);
+            console.error("lỗi:", error.response || error.message);
         }
     });
 }

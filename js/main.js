@@ -7,6 +7,7 @@ import initPlayerControls from "./player/initPlayerControls.js";
 import initCreatePlaylist from "./playlist/initCreatePlaylist.js";
 import initLibrary from "./playlist/initLibrary.js";
 import initPlaylistContextMenu from "./playlist/initPlaylistContextMenu.js";
+import initLibrarySearch from "./components/librarySearchController.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     //render
@@ -22,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initCreatePlaylist();
     initLibrary();
     initPlaylistContextMenu();
+    initLibrarySearch();
 
     router();
     window.addEventListener("hashchange", router);

@@ -8,9 +8,8 @@ function playlistControls() {
             <button class="control-btn-shuffle-large btn-shuffle">
                 <i class="bi bi-shuffle"></i>
             </button>
-            <button id="btn-add-playlist" class="control-btn-large">
-                <i class="bi bi-plus-circle icon-plus"></i>
-                <i class="fa-solid fa-check icon-added"></i>
+            <button id="btn-options-playlist" class="control-btn-large">
+                <i class="fa-solid fa-ellipsis"></i>
             </button>
         </div>
 

@@ -1,8 +1,13 @@
 function playlistHeader(playlist) {
+    const hasImage =
+        playlist.image_url &&
+        playlist.image_url !== "null" &&
+        playlist.image_url !== "";
+
     return `
     <section class="playlist-header">
 
-        <div class="playlist-image-wrapper ${playlist.image_url ? "has-image" : ""}">
+        <div class="playlist-image-wrapper ${hasImage ? "has-image" : ""}">
             <input
                 type="file"
                 id="playlist-file"
@@ -19,11 +24,18 @@ function playlistHeader(playlist) {
                     <p>Choose photo</p>
                 </div>
             </div>
-           <img
-                class="playlist-preview-image"
-                src="${playlist.image_url || ""}"
-                alt=""
-            />
+
+            ${
+                hasImage
+                    ? `
+                <img
+                    class="playlist-preview-image"
+                    src="${playlist.image_url}"
+                    alt="${playlist.name}"
+                />
+            `
+                    : ""
+            }
         </div>
 
         <div class="playlist-info">
@@ -39,7 +51,7 @@ function playlistHeader(playlist) {
             <p class="playlist-description">
                 ${playlist.description || ""}
             </p>
-            <p>hung</p>
+            <p class="playlist-description">${playlist.user_display_name}</p>
         </div>
 
     </section>
