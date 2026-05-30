@@ -1,14 +1,17 @@
-function albumControls() {
+function albumControls(album) {
+    const activeClass = album.is_liked ? "active" : "";
+    // console.log(album);
+
     return `
    <section class="container-album-controls">
         <div class="album-controls">
-            <button class="play-btn-large">
+            <button disabled class="play-btn-large">
                 <i class="fas fa-play"></i>
             </button>
-            <button class="control-btn-shuffle-large btn-shuffle">
+            <button disabled class="control-btn-shuffle-large btn-shuffle">
                 <i class="bi bi-shuffle"></i>
             </button>
-            <button id="btn-add-playlist" class="control-btn-large">
+            <button id="btn-follow-album" class="btn-follow-album ${activeClass} ">
                 <i class="bi bi-plus-circle icon-plus"></i>
                 <i class="fa-solid fa-check icon-added"></i>
             </button>

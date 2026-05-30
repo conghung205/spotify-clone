@@ -7,7 +7,8 @@ import initPlayerControls from "./player/initPlayerControls.js";
 import initCreatePlaylist from "./playlist/initCreatePlaylist.js";
 import initLibrary from "./playlist/initLibrary.js";
 import initPlaylistContextMenu from "./playlist/initPlaylistContextMenu.js";
-import initLibrarySearch from "./components/librarySearchController.js";
+import { initSidebarController } from "./pages/initSidebarController.js";
+import { syncSidebarActiveState } from "./playlist/syncSidebarActiveState.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     //render
@@ -23,8 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
     initCreatePlaylist();
     initLibrary();
     initPlaylistContextMenu();
-    initLibrarySearch();
+    initSidebarController();
 
     router();
-    window.addEventListener("hashchange", router);
+    window.addEventListener("hashchange", router, syncSidebarActiveState);
 });

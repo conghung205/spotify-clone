@@ -163,6 +163,11 @@
     font-size: 14px;
     font-weight: 600;
     transition: all var(--transition-fast);
+    display: none;
+}
+
+.nav-tab.show{
+    display: block;
 }
 
 .nav-tab:hover {
@@ -540,13 +545,7 @@
     font-size: 16px;
 }
 
-.artist-name {
-    font-size: 96px;
-    font-weight: 900;
-    color: var(--text-primary);
-    margin-bottom: var(--spacing-sm);
-    line-height: 1;
-}
+
 
 .monthly-listeners {
     font-size: 16px;
@@ -558,6 +557,7 @@
 .container-playlist-controls{
     padding: 0 24px;
 }
+.container-artist-controls,
 .container-playlist-controls,
 .container-album-controls{
     display: flex;
@@ -566,6 +566,7 @@
     padding-right: var(--spacing-lg);
 
 }
+.container-artist-controls .options,
 .container-playlist-controls .options,
 .container-album-controls .options{
     position: relative;
@@ -574,9 +575,11 @@
 .container-playlist-controls .options span{
     margin-right: 2px;
 }
+.container-artist-controls .options span,
 .container-album-controls .options span{
     margin-right: 2px;
 }
+
 .container-playlist-controls .playlist-submenu,
 .container-album-controls .album-submenu{
     position: absolute;
@@ -609,7 +612,7 @@
     gap: var(--spacing-lg);
     margin-bottom: var(--spacing-2xl);
 }
-.btn-fllow-artist{
+.btn-follow-artist{
     padding: 8px 24px;
     color: #fff;
     font-weight: 700;
@@ -617,7 +620,7 @@
     border-radius: 8px;
     letter-spacing: 1px;
 }
-.btn-fllow-artist:hover{
+.btn-follow-artist:hover{
     border: 1px solid #fff;
 }
 
@@ -756,6 +759,7 @@
 }
 
 /* Player Controls */
+.btn-follow-album,
 .control-btn-userPlus,
 .control-btn-shuffle-large,
 .control-btn-large,
@@ -770,11 +774,13 @@
     justify-content: center;
     transition: all var(--transition-fast);
 }
+.btn-follow-album,
 .control-btn-userPlus,
 .control-btn-shuffle-large,
 .control-btn-large{
     font-size: 32px;
 }
+.btn-follow-album .icon-added,
 .control-btn-large .icon-added{
     font-size: 26px;
     padding: 4px 6px;
@@ -783,18 +789,24 @@
     background-color: var(--accent-primary);
     display: none;
 }
+.btn-follow-album:hover,
 .control-btn-shuffle-large:hover,
 .control-btn-large:hover {
     color: var(--text-primary);
     transform: scale(1.04);
 }
+
+.btn-follow-album.active,
 .control-btn-shuffle-large.active,
 .control-btn-large.active{
     color: var(--accent-primary);
 }
+
+.btn-follow-album.active .icon-plus,
 .control-btn-large.active .icon-plus{
     display: none;
 }
+.btn-follow-album.active .icon-added,
 .control-btn-large.active .icon-added{
     display: block;
 }
@@ -1551,7 +1563,18 @@
     font-size: 14px;
     color: #b7b6b6;
 }
+.artist-name{
+     margin: 0;
+    font-size: 48px;
+    font-weight: 900;
+    cursor: pointer;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 
+    overflow: hidden;
+    margin-bottom: 12px;
+}
 .playlist-title{
     margin: 0;
     font-size: 56px;
@@ -2074,11 +2097,42 @@
     font-size: 14px;
     text-align: center;
     color: #b3b3b3;
-    display: none;
+    display: block;
     overflow: visible;         
     word-break: break-word;    
     white-space: normal;        
     height: auto;              
     max-height: none;           
     padding: 16px 12px;
+}
+
+/* artists item */
+.artist-item-sidebar{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.artist-item-sidebar:hover{
+    background-color: var(--bg-hover);
+}
+.artist-image-sidebar{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+.artist-image-sidebar img{
+    width: 100%;
+    border-radius: 50%;
+}
+.artist-info-sidebar .artist-name-sidebar{
+    font-size: 14px;
+    color: #e0e0e0;
+}
+.artist-subtext{
+    font-size: 12px;
+    color: #b3b3b3;
+    margin-top: 4px;
 }

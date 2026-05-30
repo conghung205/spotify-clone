@@ -13,7 +13,10 @@ export function syncUIState() {
 
     // hasSource?
     const hasSource =
-        audio.src && audio.src !== window.location.href && audio.src !== "";
+        audio.src &&
+        audio.src !== "" &&
+        !audio.src.includes(window.location.host) &&
+        (audio.src.startsWith("http") || audio.src.startsWith("blob"));
 
     // DISABLED/ENABLE
     playButtons.forEach((btn) => (btn.disabled = !hasSource));

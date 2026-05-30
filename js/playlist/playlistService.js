@@ -1,9 +1,6 @@
 import httpRequest from "../api/httpRequest.js";
 import { updatePlaylist } from "../api/playlist.js";
 
-/**
- * Xử lý luồng upload ảnh lên F8 và cập nhật Playlist
- */
 export async function handleUpdatePlaylistFlow(
     playlistId,
     currentImageUrl,
@@ -16,7 +13,7 @@ export async function handleUpdatePlaylistFlow(
         image_url: currentImageUrl,
     };
 
-    // Bước 1: Upload ảnh nếu có file mới
+    // Upload ảnh nếu có file mới
     if (selectedFile) {
         const formData = new FormData();
         formData.append("cover", selectedFile);

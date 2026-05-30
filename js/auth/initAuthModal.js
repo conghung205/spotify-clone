@@ -32,7 +32,7 @@ export function initAuthModal() {
     // Function to open modal
     function openModal() {
         authModal.classList.add("show");
-        document.body.style.overflow = "hidden"; // Prevent background scrolling
+        document.body.style.overflow = "hidden";
     }
 
     // Open modal with Sign Up form when clicking Sign Up button

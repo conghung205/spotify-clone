@@ -16,9 +16,7 @@ function tracksItem(track, index) {
         </div>
         <div class="track-plays">27,498,341</div>
         <div class="track-duration">${formatDuration(track.duration)}</div>
-        <button class="track-menu-btn">
-            <i class="fas fa-ellipsis-h"></i>
-        </button>
+        
     </div>`;
 }
 export default tracksItem;

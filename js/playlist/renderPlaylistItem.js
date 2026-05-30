@@ -1,22 +1,22 @@
-function renderPlaylistItem(playlist) {
+function renderPlaylistItem(item) {
     return `
         <div
             class="library-item"
-            data-id="${playlist.id}"
-            
+            data-id="${item.id}"
+            data-type="${item.type}"
         >
             <img
-                src="${playlist.image_url || "placeholder.svg?height=48&width=48"}"
+                src="${item.image || "placeholder.svg?height=48&width=48"}"
                 class="item-image"
             />
 
             <div class="item-info">
                 <div class="item-title">
-                    ${playlist.name}
+                    ${item.name}
                 </div>
 
                 <div class="item-subtitle">
-                    Playlist
+                    ${item.subText}
                 </div>
             </div>
         </div>

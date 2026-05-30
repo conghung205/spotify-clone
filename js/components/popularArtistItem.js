@@ -1,9 +1,9 @@
-function popularArtistItem({ name, image_url, id }) {
+function popularArtistItem(artist) {
     return `
-    <div class="artist-card" data-id="${id}">
+    <div class="artist-card" data-id="${artist.id}">
         <div class="artist-card-cover">
             <img
-                src="${image_url}?height=160&width=160"
+                src="${artist.image_url}?height=160&width=160"
                 alt="Đen"
             />
             <button class="artist-play-btn">
@@ -11,7 +11,7 @@ function popularArtistItem({ name, image_url, id }) {
             </button>
         </div>
         <div class="artist-card-info">
-            <h3 class="artist-card-name">${name}</h3>
+            <h3 class="artist-card-name">${artist.name}</h3>
             <p class="artist-card-type">Artist</p>
         </div>
     </div>`;

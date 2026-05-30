@@ -3,7 +3,7 @@
 /* Large Desktop */
 @media (min-width: 1200px) {
     .artist-name {
-        font-size: 96px;
+        font-size: 48px;
     }
 
     .track-item {
@@ -14,7 +14,7 @@
 /* Desktop */
 @media (max-width: 1199px) and (min-width: 1024px) {
     .artist-name {
-        font-size: 72px;
+        font-size: 32px;
     }
 
     .track-item {
@@ -33,7 +33,7 @@
     }
 
     .artist-name {
-        font-size: 48px;
+        font-size: 28px;
     }
 
     .artist-hero {

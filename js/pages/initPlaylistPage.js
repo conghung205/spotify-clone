@@ -3,7 +3,7 @@ import initPlaylistHeader from "../playlist/initPlaylistHeader.js";
 import initPlaylistModal from "../playlist/initPlaylistModal.js";
 import { getPlaylist, getPlaylistTracks } from "../api/playlist.js";
 import httpRequest from "../api/httpRequest.js";
-import { syncSidebarActiveState } from "../playlist/initLibraryNavigation.js";
+import { syncSidebarActiveState } from "../playlist/syncSidebarActiveState.js";
 import playlistContentTracks from "../components/playlistContentTracks.js";
 import { initPlaylistSearch } from "../playlist/initPlaylistSearch.js";
 import initPlayTrack from "../playlist/initPlayTrack.js";

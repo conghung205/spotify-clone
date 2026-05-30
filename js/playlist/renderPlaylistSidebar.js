@@ -1,12 +1,14 @@
 import renderPlaylistItem from "./renderPlaylistItem.js";
-function renderPlaylistSidebar(playlists) {
+function renderPlaylistSidebar(items, isAppend = false) {
     const container = document.querySelector(".library-content");
 
-    const html = playlists
-        .map((playlist) => renderPlaylistItem(playlist))
-        .join("");
+    const html = items.map((item) => renderPlaylistItem(item)).join("");
 
-    container.insertAdjacentHTML("beforeend", html);
+    if (isAppend) {
+        container.innerHTML += html;
+    } else {
+        container.innerHTML = html;
+    }
 }
 
 export default renderPlaylistSidebar;

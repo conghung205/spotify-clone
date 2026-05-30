@@ -17,8 +17,9 @@ function sideBar() {
             </div>
 
             <div class="nav-tabs">
-                <button class="nav-tab active">Playlists</button>
-                <button class="nav-tab">Artists</button>
+                <button class="nav-tab nav-playlist">Playlists</button>
+                <button class="nav-tab nav-artists ">Artists</button>
+                <button class="nav-tab nav-albums ">Album</button>
             </div>
 
             <div class="header-library">
@@ -74,9 +75,7 @@ function sideBar() {
                 </div>
             </div>
 
-            <div class="library-content">
-                <div class="no-results-message"></div>
-            </div>
+            <div class="library-content"></div>
         </nav>
     </aside>`;
 }
