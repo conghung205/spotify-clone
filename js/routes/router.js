@@ -3,6 +3,7 @@ import initAlbumPage from "../pages/initAlbumPage.js";
 import initArtistPage from "../pages/initArtistPage.js";
 import initPlaylistPage from "../pages/initPlaylistPage.js";
 import { initSearchPage } from "../pages/initSearchPage.js";
+import initCollectionPage from "../pages/initCollectionPage.js";
 
 function router() {
     const hash = window.location.hash || "#/";
@@ -45,6 +46,8 @@ function router() {
         }
 
         initSearchPage(query);
+    } else if (hash.startsWith("#/collection/")) {
+        initCollectionPage();
     }
 }
 

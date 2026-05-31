@@ -5,7 +5,7 @@ function artistHero({ name, background_image_url }) {
             <img
                 src="${background_image_url}"
                 alt="Đen artist background"
-                class="${name}"
+                class="hero-image"
             />
             <div class="hero-overlay"></div>
         </div>
