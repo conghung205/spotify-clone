@@ -1,9 +1,16 @@
 import { getMyPlaylists } from "../api/playlist.js";
 import { getUserFollowArtists } from "../api/artist.js";
 import { getMySavedAlbums } from "../api/album.js";
+import { getMyLikeTracks } from "../api/tracks.js";
 import renderPlaylistSidebar from "../playlist/renderPlaylistSidebar.js";
 import renderArtistSidebar from "../components/renderArtistSidebar.js";
 import { syncSidebarActiveState } from "../playlist/syncSidebarActiveState.js";
+
+// Biến để giữ Promise của Sidebar
+let sidebarResolveFn;
+export const sidebarReadyPromise = new Promise((resolve) => {
+    sidebarResolveFn = resolve;
+});
 
 export function initSidebarController() {
     const sidebarState = {
@@ -15,6 +22,7 @@ export function initSidebarController() {
         playlists: [],
         albums: [],
         artists: [],
+        tracks: [],
     };
 
     const playlistTabBtn = document.querySelector(".nav-tab.nav-playlist");
@@ -73,13 +81,14 @@ export function initSidebarController() {
 
             if (!id || !type) return;
 
-            if (type === "artist") {
+            if (type === "song") {
+                window.location.hash = `#/collection/tracks`;
+            } else if (type === "artist") {
                 window.location.hash = `#/artists/${id}`;
             } else if (type === "album") {
                 window.location.hash = `#/albums/${id}`;
             } else if (type === "playlist") {
                 window.location.hash = `#/playlists/${id}`;
-                7;
             }
         }
     });
@@ -89,11 +98,13 @@ export function initSidebarController() {
 
     async function fetchAllSidebarData() {
         try {
-            const [playlistsRes, artistsRes, albumsRes] = await Promise.all([
-                getMyPlaylists().catch(() => []),
-                getUserFollowArtists().catch(() => []),
-                getMySavedAlbums().catch(() => []),
-            ]);
+            const [playlistsRes, artistsRes, albumsRes, tracksRes] =
+                await Promise.all([
+                    getMyPlaylists().catch(() => []),
+                    getUserFollowArtists().catch(() => []),
+                    getMySavedAlbums().catch(() => []),
+                    getMyLikeTracks().catch(() => []),
+                ]);
 
             const rawPlaylists = playlistsRes.playlists || playlistsRes || [];
             rawData.playlists = rawPlaylists.map((item) => ({
@@ -125,6 +136,24 @@ export function initSidebarController() {
                 type: "album",
             }));
 
+            const rawTracks = tracksRes.tracks || tracksRes || [];
+            const totalLikedSongs =
+                tracksRes.pagination?.total || rawTracks.length;
+
+            if (totalLikedSongs > 0) {
+                rawData.tracks = [
+                    {
+                        id: "liked-songs-id", // Định danh riêng cho mục đặc biệt này
+                        name: "Liked Songs",
+                        image: "", // Đánh dấu để hàm render nhận diện và vẽ icon Trái Tim
+                        subText: `Playlist • ${totalLikedSongs} songs`,
+                        type: "song", // Đặt type riêng để xử lý click và giao diện
+                    },
+                ];
+            } else {
+                rawData.tracks = []; // Nếu không có bài nào liked thì trống
+            }
+
             // HIỂN THỊ NÚT TAB
             if (rawData.playlists.length > 0 && playlistTabBtn)
                 playlistTabBtn.classList.add("show");
@@ -139,8 +168,12 @@ export function initSidebarController() {
             else albumsTabBtn?.classList.remove("show");
 
             renderLibraryWithFilter();
+
+            //// Kích hoạt Promise báo hiệu dữ liệu Sidebar đã nạp xong vào DOM ổn định
+            sidebarResolveFn(true);
         } catch (error) {
             console.error(error);
+            sidebarResolveFn(false);
         }
     }
 
@@ -162,7 +195,7 @@ export function initSidebarController() {
             dataToRender = [...rawData.albums];
         }
 
-        // Tìm kiếm
+        // Lọc mảng item theo từ khóa tìm kiếm
         if (sidebarState.searchQuery) {
             dataToRender = dataToRender.filter((item) =>
                 item.name
@@ -171,7 +204,30 @@ export function initSidebarController() {
             );
         }
 
-        if (dataToRender.length === 0) {
+        const likedSongsItem = rawData.tracks[0];
+        let shouldRenderLikedSongs = false;
+
+        // Liked Songs chỉ xuất hiện ở "all" hoặc "playlists"
+        if (
+            likedSongsItem &&
+            (sidebarState.currentTab === "all" ||
+                sidebarState.currentTab === "playlists")
+        ) {
+            if (sidebarState.searchQuery) {
+                // Nếu có tìm kiếm, chữ "Liked Songs" phải khớp với từ khóa gõ vào
+                if (
+                    likedSongsItem.name
+                        .toLowerCase()
+                        .includes(sidebarState.searchQuery.toLowerCase())
+                ) {
+                    shouldRenderLikedSongs = true;
+                }
+            } else {
+                shouldRenderLikedSongs = true;
+            }
+        }
+
+        if (dataToRender.length === 0 && !shouldRenderLikedSongs) {
             libraryContent.innerHTML = `<div class="no-results-message">No items found</div>`;
             return;
         }
@@ -183,12 +239,10 @@ export function initSidebarController() {
                 if (item.type === "artist") {
                     renderArtistSidebar([item], true);
                 } else {
-                    // Playlist và Album ảnh vuông
                     renderPlaylistSidebar([item], true);
                 }
             });
         } else {
-            // Khi chọn đích danh tab lọc đơn lẻ
             if (sidebarState.currentTab === "playlists")
                 renderPlaylistSidebar(dataToRender);
             if (sidebarState.currentTab === "albums")
@@ -196,9 +250,29 @@ export function initSidebarController() {
             if (sidebarState.currentTab === "artists")
                 renderArtistSidebar(dataToRender);
         }
+
+        if (shouldRenderLikedSongs) {
+            libraryContent.insertAdjacentHTML(
+                "afterbegin",
+                `
+            <div class="library-item" data-id="${likedSongsItem.id}" data-type="${likedSongsItem.type}">
+                <div class="item-icon liked-songs">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="item-info">
+                    <div class="item-title">${likedSongsItem.name}</div>
+                    <div class="item-subtitle">
+                        <i class="fas fa-thumbtack"></i>
+                        ${likedSongsItem.subText}
+                    </div>
+                </div>
+            </div>
+            `,
+            );
+        }
     }
 
-    // Custom Event
+    // Custom Event: khi có nơi bắn sự kiện này sẽ fetch lại api
     document.addEventListener("libraryChanged", () => {
         fetchAllSidebarData();
     });
@@ -246,7 +320,4 @@ export function initSidebarController() {
     window.addEventListener("hashchange", () => {
         syncSidebarActiveState();
     });
-
-    // Chạy lần đầu khi khởi động ứng dụng
-    fetchAllSidebarData();
 }

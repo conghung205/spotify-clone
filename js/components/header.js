@@ -11,8 +11,10 @@ function header() {
                     <input
                         type="text"
                         placeholder="What do you want to play?"
-                        class="search-input"
+                        class="search-input global-search-input"
                     />
+                    <div class="search-dropdown-results">
+                    </div>
                 </div>
             </div>
         </div>

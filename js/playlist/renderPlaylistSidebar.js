@@ -1,6 +1,13 @@
 import renderPlaylistItem from "./renderPlaylistItem.js";
-function renderPlaylistSidebar(items, isAppend = false) {
-    const container = document.querySelector(".library-content");
+function renderPlaylistSidebar(
+    items,
+    isAppend = false,
+    wrapper = ".library-content",
+) {
+    const container =
+        typeof wrapper === "string" ? document.querySelector(wrapper) : wrapper;
+
+    if (!container) return;
 
     const html = items.map((item) => renderPlaylistItem(item)).join("");
 

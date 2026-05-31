@@ -9,6 +9,7 @@ import initLibrary from "./playlist/initLibrary.js";
 import initPlaylistContextMenu from "./playlist/initPlaylistContextMenu.js";
 import { initSidebarController } from "./pages/initSidebarController.js";
 import { syncSidebarActiveState } from "./playlist/syncSidebarActiveState.js";
+import { initHeaderSearch } from "./components/initHeaderSearch.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     //render
@@ -25,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initLibrary();
     initPlaylistContextMenu();
     initSidebarController();
+    initHeaderSearch();
 
     router();
     window.addEventListener("hashchange", router, syncSidebarActiveState);

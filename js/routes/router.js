@@ -2,6 +2,7 @@ import initHomePage from "../pages/initHomePage.js";
 import initAlbumPage from "../pages/initAlbumPage.js";
 import initArtistPage from "../pages/initArtistPage.js";
 import initPlaylistPage from "../pages/initPlaylistPage.js";
+import { initSearchPage } from "../pages/initSearchPage.js";
 
 function router() {
     const hash = window.location.hash || "#/";
@@ -32,6 +33,18 @@ function router() {
         const playlistId = parts[2];
 
         initPlaylistPage(playlistId);
+    } else if (hash.startsWith("#/search")) {
+        // vd: "#/search?q=yêu" => ["#/search", "q=yêu"]
+        const parts = hash.split("?");
+
+        let query = "";
+
+        if (parts[1]) {
+            const urlParams = new URLSearchParams(parts[1]);
+            query = urlParams.get("q") || "";
+        }
+
+        initSearchPage(query);
     }
 }
 

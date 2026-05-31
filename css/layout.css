@@ -30,6 +30,7 @@
 .logo i {
     font-size: 32px;
     color: var(--text-primary);
+    cursor: pointer;
 }
 
 .sidebar-nav {
@@ -90,7 +91,7 @@
     flex: 1;
     display: flex;
     justify-content: flex-start;
-    max-width: 420px;
+    max-width: 570px;
 }
 
 .header-actions {
