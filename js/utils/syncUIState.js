@@ -1,4 +1,4 @@
-import audio from "../player/audio.js"; // Đảm bảo đúng đường dẫn tới file audio của bạn
+import audio from "../player/audio.js";
 import { isShuffle } from "../player/playState.js";
 
 export function syncUIState() {

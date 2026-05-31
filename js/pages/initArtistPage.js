@@ -6,6 +6,7 @@ import artistControls from "../components/artistControls.js";
 import playTrack from "../player/playTrack.js";
 import { syncUIState } from "../utils/syncUIState.js";
 import { toast } from "../components/toast.js";
+import { handleLikeClick } from "../utils/likeHandler.js";
 
 async function initArtistPage(artistId) {
     const contentContainer = document.getElementById("content-container");
@@ -82,6 +83,22 @@ async function initArtistPage(artistId) {
                         document.dispatchEvent(libraryEvent);
                     } catch (error) {
                         console.error(error);
+                    }
+                    return;
+                }
+
+                const likeBtn = e.target.closest(".btn-like-track");
+                if (likeBtn) {
+                    e.stopPropagation();
+
+                    await handleLikeClick(likeBtn);
+
+                    // Cập nhật trạng thái RAM (tracksList) của trang Artist để khi chuyển tab/render lại không mất màu nút
+                    const id = likeBtn.dataset.id;
+                    const currentTrack = tracksList.find((t) => t.id === id);
+                    if (currentTrack) {
+                        currentTrack.is_liked =
+                            likeBtn.classList.contains("liked");
                     }
                     return;
                 }

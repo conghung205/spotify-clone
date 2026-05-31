@@ -16,6 +16,16 @@ function tracksItem(track, index) {
         </div>
         <div class="track-plays">27,498,341</div>
         <div class="track-duration">${formatDuration(track.duration)}</div>
+        <button 
+            class="btn-like-track ${track.is_liked ? "liked" : ""}"
+            data-id="${track.id}" 
+            data-type="song">
+            ${
+                track.is_liked
+                    ? '<i class="bi bi-check-circle-fill icon-check"></i>'
+                    : '<i class="bi bi-plus-circle icon-like"></i>'
+            }
+        </button>
         
     </div>`;
 }

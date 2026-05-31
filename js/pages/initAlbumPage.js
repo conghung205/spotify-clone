@@ -6,6 +6,7 @@ import albumHero from "../components/albumHero.js";
 import albumTracks from "../components/albumTracks.js";
 import { syncUIState } from "../utils/syncUIState.js";
 import { toast } from "../components/toast.js";
+import { handleLikeClick } from "../utils/likeHandler.js";
 
 async function initAlbumPage(albumId) {
     const contentContainer = document.getElementById("content-container");
@@ -25,7 +26,7 @@ async function initAlbumPage(albumId) {
     try {
         const album = await httpRequest.get(`/albums/${albumId}`);
         const tracksRes = await httpRequest.get(`/albums/${albumId}/tracks`);
-        const tracksList = tracksRes.tracks;
+        const tracksList = tracksRes.tracks || [];
 
         currentAlbum = album;
 
@@ -39,6 +40,8 @@ async function initAlbumPage(albumId) {
 
         heroContainer.innerHTML = albumHero(currentAlbum);
         tracksContainer.innerHTML = albumTracks(tracksList);
+
+        syncUIState();
 
         contentWrapper?.addEventListener("click", async (e) => {
             const saveAlbumBtn = e.target.closest("#btn-follow-album");
@@ -75,6 +78,21 @@ async function initAlbumPage(albumId) {
                 return;
             }
 
+            const likeBtn = e.target.closest(".btn-like-track");
+            if (likeBtn) {
+                e.stopPropagation();
+
+                await handleLikeClick(likeBtn);
+
+                // Cập nhật trạng thái RAM (tracksList) của trang Artist để khi chuyển tab/render lại không mất màu nút
+                const id = likeBtn.dataset.id;
+                const currentTrack = tracksList.find((t) => t.id === id);
+                if (currentTrack) {
+                    currentTrack.is_liked = likeBtn.classList.contains("liked");
+                }
+                return;
+            }
+
             const trackItem = e.target.closest(".track-item");
             if (trackItem) {
                 const index = Number(trackItem.dataset.index);
@@ -84,7 +102,6 @@ async function initAlbumPage(albumId) {
     } catch (error) {
         console.error(error);
     }
-    syncUIState();
 }
 
 export default initAlbumPage;
