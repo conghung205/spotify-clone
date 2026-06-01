@@ -8,6 +8,7 @@ export async function logout() {
 
         // Gọi API logout
         await logoutApi(refreshToken);
+        window.location = "/";
     } catch (error) {
         console.log(error);
     } finally {

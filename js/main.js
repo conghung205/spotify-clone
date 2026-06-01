@@ -29,5 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
     initHeaderSearch();
 
     router();
-    window.addEventListener("hashchange", router, syncSidebarActiveState);
+    window.addEventListener("hashchange", () => {
+        router();
+        syncSidebarActiveState();
+    });
 });

@@ -5,6 +5,7 @@ export function initUserDropdown() {
     const userInfo = document.querySelector(".user-info");
     const userDropdown = document.getElementById("userDropdown");
     const logoutBtn = document.getElementById("logoutBtn");
+    const profileBtn = document.getElementById("profileBtn");
 
     // Toggle dropdown
     userInfo.addEventListener("click", function (e) {
@@ -38,5 +39,11 @@ export function initUserDropdown() {
             message: "Logout successfully",
             duration: 1000,
         });
+    });
+
+    // profile
+    profileBtn.addEventListener("click", () => {
+        window.location.hash = "#/me";
+        userDropdown.classList.remove("show");
     });
 }

@@ -39,6 +39,10 @@ function header() {
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Log out</span>
                     </div>
+                    <div class="dropdown-item" id="profileBtn">
+                        <i class="fa-solid fa-circle-user"></i>
+                        <span>Profile</span>
+                    </div>
                 </div>
             </div>
         </div>

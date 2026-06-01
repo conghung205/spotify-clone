@@ -150,6 +150,7 @@ export function initAuthModal() {
                 message: message,
                 duration: 3000,
             });
+            window.location.reload();
         } catch (error) {
             const code = error?.response?.error?.code;
             const message = error?.response?.error?.message;
