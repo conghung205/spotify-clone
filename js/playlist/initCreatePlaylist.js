@@ -1,4 +1,4 @@
-import createPlaylist from "./createPlayList.js";
+import createPlaylist from "./createPlaylist.js";
 
 function initCreatePlaylist() {
     const createBtn = document.querySelector(".create-btn");

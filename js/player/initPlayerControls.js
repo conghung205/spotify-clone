@@ -9,7 +9,7 @@ import {
     handleNextTrack,
     handlePrevTrack,
     handleTrackEnded,
-} from "./playlistController.js";
+} from "./playListController.js";
 
 import { initVolumeControl, initMuteToggle } from "./volumeController.js";
 import { syncUIState } from "../utils/syncUIState.js";
