@@ -1,4 +1,8 @@
+import { formatDurationFullText } from "../utils/formatDuration.js";
 function playlistHeader(playlist) {
+    const totalSongs = playlist.total_tracks;
+    console.log(totalSongs);
+
     const hasImage =
         playlist.image_url &&
         playlist.image_url !== "null" &&
@@ -51,7 +55,10 @@ function playlistHeader(playlist) {
             <p class="playlist-description">
                 ${playlist.description || ""}
             </p>
-            <p class="playlist-description">${playlist.user_display_name}</p>
+            <p class="playlist-description">
+                <a href="#/me" class="playlist-username">${playlist.user_display_name}</a> • ${totalSongs} 
+                ${totalSongs > 1 ? "songs" : "song"}, ${formatDurationFullText(playlist.total_duration)}
+            </p>
         </div>
 
     </section>

@@ -1,5 +1,4 @@
 import { logout } from "../auth/logout.js";
-import { toast } from "./toast.js";
 
 export function initUserDropdown() {
     const userInfo = document.querySelector(".user-info");
@@ -29,16 +28,10 @@ export function initUserDropdown() {
     });
 
     // Logout
-    logoutBtn.addEventListener("click", function () {
+    logoutBtn.addEventListener("click", async () => {
         userDropdown.classList.remove("show");
 
         logout();
-        toast({
-            type: "success",
-            title: "Success",
-            message: "Logout successfully",
-            duration: 1000,
-        });
     });
 
     // profile

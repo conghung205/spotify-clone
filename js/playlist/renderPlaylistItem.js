@@ -3,7 +3,7 @@ function renderPlaylistItem(item) {
         <div
             class="library-item"
             data-id="${item.id}"
-            data-type="${item.type}"
+            data-type="${item.type || "playlist "}"
         >
             <img
                 src="${item.image || "placeholder.svg?height=48&width=48"}"

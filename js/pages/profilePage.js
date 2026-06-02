@@ -29,14 +29,6 @@ function profilePage(user) {
                             <i class="bi bi-chevron-right"></i>
                         </div>
 
-                        <div class="info-row" id="row-username">
-                            <div class="row-label">
-                                <span class="title">User name</span>
-                                <span class="value" id="val-username">${user.username || "Not yet updated"}</span>
-                            </div>
-                            <i class="bi bi-chevron-right"></i>
-                        </div>
-
                         <div class="info-row" id="row-avatar">
                             <div class="row-label">
                                 <span class="title">Avatar</span>

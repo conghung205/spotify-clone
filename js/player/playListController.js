@@ -6,8 +6,31 @@ import {
     isShuffle,
 } from "./playState.js";
 
+function getRandomIndex() {
+    if (currentPlaylist.length <= 1) {
+        return currentIndex;
+    }
+
+    let nextIndex;
+    do {
+        nextIndex = Math.floor(Math.random() * currentPlaylist.length);
+    } while (nextIndex === currentIndex);
+
+    return nextIndex;
+}
+
 // next track
 export function handleNextTrack() {
+    if (isRepeat) {
+        playTrack(currentPlaylist, currentIndex);
+        return;
+    }
+    if (isShuffle) {
+        const randomIndex = getRandomIndex();
+        playTrack(currentPlaylist, randomIndex);
+        return;
+    }
+
     let nextIndex = currentIndex + 1;
     if (nextIndex >= currentPlaylist.length) {
         nextIndex = 0;
@@ -17,6 +40,16 @@ export function handleNextTrack() {
 
 // prev track
 export function handlePrevTrack() {
+    if (isRepeat) {
+        playTrack(currentPlaylist, currentIndex);
+        return;
+    }
+    if (isShuffle) {
+        const randomIndex = getRandomIndex();
+        playTrack(currentPlaylist, randomIndex);
+        return;
+    }
+
     let prevIndex = currentIndex - 1;
     if (prevIndex < 0) {
         prevIndex = currentPlaylist.length - 1;
@@ -33,15 +66,8 @@ export function handleTrackEnded(audio) {
     }
 
     if (isShuffle) {
-        let nextIndex;
-        if (currentPlaylist.length === 1) {
-            nextIndex = currentIndex;
-        } else {
-            do {
-                nextIndex = Math.floor(Math.random() * currentPlaylist.length);
-            } while (nextIndex === currentIndex);
-        }
-        playTrack(currentPlaylist, nextIndex);
+        const randomIndex = getRandomIndex();
+        playTrack(currentPlaylist, randomIndex);
         return;
     }
 

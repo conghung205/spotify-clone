@@ -4,6 +4,7 @@ import { getMyLikeTracks } from "../api/tracks.js";
 import collectionTracks from "../components/collectionTracks.js";
 import playTrack from "../player/playTrack.js";
 import { handleLikeClick } from "../utils/likeHandler.js";
+import authState from "../auth/authState.js";
 
 // lưu trữ hàng đang chọn
 let activeRowForContextMenu = null;
@@ -19,8 +20,6 @@ async function initCollectionPage() {
     const contentContainer = document.getElementById("content-container");
     if (!contentContainer) return;
 
-    contentContainer.innerHTML = collectionPage();
-
     try {
         const res = await getMyLikeTracks();
         const tracks = (res.tracks || []).map((track) => ({
@@ -28,12 +27,27 @@ async function initCollectionPage() {
             is_liked: true,
         }));
 
+        const user = authState.getUser();
+        const userName = user.display_name;
+
+        const totalSongs = tracks.length;
+        const totalSeconds = tracks.reduce((accumulator, currentTrack) => {
+            return accumulator + (currentTrack.duration || 0);
+        }, 0);
+
+        const dataTorenderHeroCollection = {
+            userName: userName,
+            totalSongs,
+            duration: totalSeconds,
+        };
+
+        contentContainer.innerHTML = collectionPage(dataTorenderHeroCollection);
+
         const tracksContents = document.querySelector(
             ".collection-tracks-container",
         );
         if (tracks.length === 0) {
-            tracksContents.innerHTML =
-                '<div class="no-results">Chưa có bài hát yêu thích nào!</div>';
+            tracksContents.innerHTML = `<div class="no-results">You don't have a favorite song yet.</div>`;
             return;
         }
         tracksContents.innerHTML = collectionTracks(tracks);
@@ -60,24 +74,24 @@ async function initCollectionPage() {
                         setTimeout(() => {
                             row.remove();
 
-                            // Cập nhật lại số thứ tự (index + 1) của các bài hát còn lại cho đẹp giao diện
+                            // Cập nhật lại số thứ tự (index + 1) của các bài hát còn lại
                             const allRemainingRows =
                                 tbody.querySelectorAll(".collection-row");
                             allRemainingRows.forEach((r, idx) => {
                                 const numText =
                                     r.querySelector(".track-num-text");
                                 if (numText) numText.textContent = idx + 1;
-                                // Cập nhật lại index để lúc sau bấm phát nhạc không bị lệch bài
+                                // Cập nhật lại index để bấm phát nhạc không bị lệch bài
                                 r.setAttribute("data-index", idx);
                             });
 
-                            // Nếu xóa hết bài hát thì hiển thị thông báo trống
+                            // when remove all songs
                             if (allRemainingRows.length === 0) {
                                 const tracksContents = document.querySelector(
                                     ".collection-tracks-container",
                                 );
                                 if (tracksContents) {
-                                    tracksContents.innerHTML = `<div class="no-results">Chưa có bài hát yêu thích nào!</div>`;
+                                    tracksContents.innerHTML = `<div class="no-results">You don't have a favorite song yet.</div>`;
                                 }
                             }
                         }, 300);

@@ -1,5 +1,7 @@
-// import { formatDurationFullText } from "../utils/formatDuration";
-function heroCollection() {
+import { formatDurationFullText } from "../utils/formatDuration.js";
+function heroCollection(data) {
+    console.log(data);
+
     return `
         <section class="collection-hero">
             <div class="collection-icon">
@@ -8,9 +10,9 @@ function heroCollection() {
             <div class="collection-content">
                 <p>Playlist</p>
                 <h1 class="artist-name">Liked Songs</h1>
-                <p>
-                    <a href="">artisrt name</a> • 2023 • Total Tracks songs ,
-                    Time duảtion
+                <p class="collection-desc">
+                    <a href="#/me" class="collection-username">${data.userName}</a> • ${data.totalSongs} ${data.totalSongs > 1 ? "songs" : "song"},
+                    ${formatDurationFullText(data.duration)}
                 </p>
             </div>
         </section>`;

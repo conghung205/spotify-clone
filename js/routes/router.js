@@ -9,6 +9,11 @@ import initProfilePage from "../pages/initProfilePage.js";
 function router() {
     const hash = window.location.hash || "#/";
 
+    const contentContainer = document.getElementById("content-container");
+    if (contentContainer) {
+        contentContainer.scrollTop = 0;
+    }
+
     // homepage
     if (hash === "#/") {
         initHomePage();

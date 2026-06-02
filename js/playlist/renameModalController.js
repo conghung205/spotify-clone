@@ -1,4 +1,5 @@
 import { updatePlaylist } from "../api/playlist.js";
+import { toast } from "../components/toast.js";
 
 export function openRenameModal(playlistId, currentName, onSuccessCallback) {
     const modal = document.getElementById("rename-playlist-modal");
@@ -41,6 +42,11 @@ export function openRenameModal(playlistId, currentName, onSuccessCallback) {
             }
 
             closeRenameModal();
+            toast({
+                type: "success",
+                title: "Success",
+                message: "Name change successful",
+            });
         } catch (error) {
             console.error("Error renaming playlist:", error);
         }

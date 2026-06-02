@@ -7,7 +7,11 @@ async function initLibrary() {
 
         renderPlaylistSidebar(res.playlists);
     } catch (error) {
-        console.log(error);
+        if (error?.status === 401 || error?.response?.status === 401) {
+            renderPlaylistSidebar([]);
+        } else {
+            console.error(error);
+        }
     }
 }
 export default initLibrary;

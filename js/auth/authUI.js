@@ -17,7 +17,7 @@ export function showAuthButtons() {
 }
 
 export function updateCurrentUser(user) {
-    console.log(user);
+    // console.log(user);
 
     const userName = document.querySelector("#user-name");
 
@@ -27,7 +27,7 @@ export function updateCurrentUser(user) {
         userAvatar.src = user.avatar_url;
     }
 
-    if (user.email) {
-        userName.textContent = user.display_name || user.email;
-    }
+    // if (user.email) {
+    //     userName.textContent = user.display_name || user.email;
+    // }
 }

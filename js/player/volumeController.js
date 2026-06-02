@@ -6,17 +6,13 @@ export function initMuteToggle(volumeBtn, audio) {
         if (volumeBtn.disabled) return;
 
         if (audio.volume > 0) {
-            // Nếu đang có tiếng -> Lưu lại mức âm lượng hiện tại và tắt tiếng (về 0)
             lastVolume = audio.volume;
             audio.volume = 0;
         } else {
-            // Nếu đang tắt tiếng -> Trả lại mức âm lượng trước đó
-            // Phòng trường hợp lastVolume bị bằng 0 thì mặc định trả về 0.5
             audio.volume = lastVolume > 0 ? lastVolume : 0.5;
         }
     });
 
-    // 2. Lắng nghe sự kiện đổi âm lượng để tự động ĐỔI ICON
     audio.addEventListener("volumechange", () => {
         if (audio.volume === 0) {
             // Thêm class biểu thị trạng thái tắt tiếng
@@ -47,7 +43,7 @@ export function initVolumeControl(
         return offsetX / rect.width; // Trả về giá trị từ 0 đến 1
     };
 
-    // 1. Nhấn chuột / Chạm tay vào thanh volume
+    // Nhấn chuột / Chạm tay vào thanh volume
     volumeBar.addEventListener("pointerdown", (e) => {
         if (volumeBar.classList.contains("disabled")) return;
 
@@ -57,10 +53,11 @@ export function initVolumeControl(
         volumeBar.setPointerCapture(e.pointerId);
 
         const volumeLevel = updateVolumeOnEvent(e);
-        audio.volume = volumeLevel; // Cập nhật trực tiếp vào audio element
+        // Cập nhật trực tiếp vào audio element
+        audio.volume = volumeLevel;
     });
 
-    // 2. Đang kéo di chuyển
+    // Đang kéo di chuyển
     volumeBar.addEventListener("pointermove", (e) => {
         if (!getIsDraggingVolume()) return;
 
@@ -68,7 +65,7 @@ export function initVolumeControl(
         audio.volume = volumeLevel;
     });
 
-    // 3. Thả chuột / Rời tay
+    // Thả chuột
     volumeBar.addEventListener("pointerup", (e) => {
         if (!getIsDraggingVolume()) return;
         setIsDraggingVolume(false);
@@ -80,7 +77,7 @@ export function initVolumeControl(
         if (volumeLevel > 0) lastVolume = volumeLevel;
     });
 
-    // 4. Bị ngắt quãng phòng hờ
+    // Bị ngắt quãng phòng hờ
     volumeBar.addEventListener("pointercancel", (e) => {
         if (!getIsDraggingVolume()) return;
         setIsDraggingVolume(false);
@@ -88,7 +85,7 @@ export function initVolumeControl(
         volumeBar.releasePointerCapture(e.pointerId);
     });
 
-    // 5. Đồng bộ UI khi giá trị audio.volume thay đổi (Bắt buộc phải có)
+    // Đồng bộ UI khi giá trị audio.volume thay đổi
     audio.addEventListener("volumechange", () => {
         const percent = audio.volume * 100;
         volumeFill.style.width = `${percent}%`;

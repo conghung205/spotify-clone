@@ -10,6 +10,7 @@ import initPlaylistContextMenu from "./playlist/initPlaylistContextMenu.js";
 import { initSidebarController } from "./pages/initSidebarController.js";
 import { syncSidebarActiveState } from "./playlist/syncSidebarActiveState.js";
 import { initHeaderSearch } from "./components/initHeaderSearch.js";
+import initHeaderScroll from "./components/initHeaderScroll.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     //render
@@ -23,10 +24,17 @@ document.addEventListener("DOMContentLoaded", () => {
     initUserDropdown();
     initPlayerControls();
     initCreatePlaylist();
-    initLibrary();
     initPlaylistContextMenu();
-    initSidebarController();
     initHeaderSearch();
+    initHeaderScroll();
+
+    const hasToken = localStorage.getItem("accessToken");
+
+    if (hasToken) {
+        // Chỉ khi có token mới đi lấy dữ liệu cá nhân
+        initLibrary();
+        initSidebarController();
+    }
 
     router();
     window.addEventListener("hashchange", () => {

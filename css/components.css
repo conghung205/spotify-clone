@@ -564,7 +564,7 @@
     display: flex;
     gap: 24px;
     height: 240px;
-    padding: 28px;
+    padding: 20px;
     border-radius: 8px;
     background-color: #9e9d9f;
 }
@@ -1075,12 +1075,12 @@
 
 /* User avatar */
 .user-avatar {
-    width: 32px;
-    height: 32px;
+   
     border-radius: var(--radius-full);
     overflow: hidden;
     cursor: pointer;
     transition: transform var(--transition-fast);
+    
 }
 
 .user-avatar:hover {
@@ -1316,8 +1316,8 @@
 }
 
 .user-avatar {
-    width: 32px;
-    height: 32px;
+    width: 46px;
+    height: 46px;
     border-radius: var(--radius-full);
     overflow: hidden;
     cursor: pointer;
@@ -1325,6 +1325,7 @@
     background: none;
     border: none;
     padding: 0;
+    border: 6px solid #515151;
 }
 
 .user-avatar:hover {
@@ -1342,7 +1343,7 @@
     gap: 6px;
     cursor: pointer;
     padding: 4px 8px;
-    border: 1px solid var(--border-color);
+    /* border: 1px solid var(--border-color); */
     border-radius: 10px;
 }
 .user-name{
@@ -1350,7 +1351,9 @@
     font-size: 18px;
     font-weight: 600;
     color: #e0e0e0;
+    display: none;
 }
+
 
 /* User Dropdown */
 .user-dropdown {
@@ -1683,8 +1686,14 @@
     margin-bottom: 12px;
 }
 .playlist-description{
+    margin-bottom: 4px;
     font-size: 14px;
     color: #b7b6b6;
+}
+.playlist-description .playlist-username{
+    font-size: 14px;
+    color: #f2f2f2;
+    font-weight: 600;
 }
 .playlist-search{
     padding: 12px 36px;
@@ -2199,12 +2208,11 @@
     color: #fff;
 }
 
-.context-menu-item.unlike-album-action:hover,
-.context-menu-item.unfollow-artist-action:hover,
-.context-menu-item.clear-liked-songs-action:hover,
-.context-menu-item.delete-track-action:hover{
-    background-color: #e91429; 
-    color: #fff;
+.context-menu-item.unlike-album-action:hover i,
+.context-menu-item.unfollow-artist-action:hover i,
+.context-menu-item.clear-liked-songs-action:hover i,
+.context-menu-item.delete-track-action:hover i{
+    color: #e91429;
     
 }
 
@@ -2351,6 +2359,14 @@
 }
 .collection-content .artist-name{
     font-size: 76px;
+}
+.collection-desc{
+    font-size: 14px;
+    color: #b3b3b3;
+}
+.collection-username{
+    color: #f2f2f2;
+    font-weight: 600;
 }
 
 /* context menu collection */

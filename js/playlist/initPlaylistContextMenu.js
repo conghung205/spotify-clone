@@ -260,7 +260,7 @@ function handleLikedSongsMenu(e, songItem) {
                     await Promise.all(unlikePromises);
                 }
 
-                // 4. Xóa item "Liked Songs" khỏi Sidebar UI sau khi hoàn tất
+                // Xóa item "Liked Songs" khỏi Sidebar UI sau khi hoàn tất
                 songItem.remove();
 
                 // Nếu đang đứng ở trang Liked Songs thì đẩy về trang chủ
@@ -270,12 +270,17 @@ function handleLikedSongsMenu(e, songItem) {
 
                 toast({
                     type: "success",
-                    title: "Thành công",
-                    message: "Đã xóa thành công tất cả các bài hát yêu thích!",
+                    title: "Success",
+                    message:
+                        "All favorite songs have been successfully deleted!",
                 });
             } catch (error) {
                 console.error("Lỗi hệ thống khi clear danh sách:", error);
-                alert("Failed to clear some songs. Please try again.");
+                toast({
+                    type: "error",
+                    title: "Error",
+                    message: "Failed to clear some songs. Please try again.",
+                });
             } finally {
                 document.body.style.cursor = "default";
                 removeExistingMenu();
@@ -379,6 +384,11 @@ function initPlaylistMenuActions(menu, playlist, nameEl) {
                 if (hash === `#/playlists/${playlist.id}`) {
                     window.location.hash = "/";
                 }
+                toast({
+                    type: "success",
+                    title: "Success",
+                    message: "Playlist deleted successfully.",
+                });
             } catch (error) {
                 console.error(error);
             }

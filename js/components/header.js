@@ -25,7 +25,7 @@ function header() {
             </div>
             <div class="user-menu">
                 <div class="user-info">
-                    <span id="user-name" class="user-name"></span>
+
                     <button class="user-avatar" id="userAvatar">
                         <img
                             id="user-avatar"

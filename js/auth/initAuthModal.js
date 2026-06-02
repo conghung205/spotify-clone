@@ -2,6 +2,10 @@ import { login, register } from "../api/auth.js";
 import { showCurrentUser } from "../auth/authUI.js";
 import { showFieldError, clearInputError } from "../utils/validation.js";
 import { toast } from "../components/toast.js";
+import initLibrary from "../playlist/initLibrary.js";
+import { initSidebarController } from "../pages/initSidebarController.js";
+import authState from "./authState.js";
+
 export function initAuthModal() {
     // Get DOM elements
     const signupBtn = document.querySelector(".signup-btn");
@@ -90,6 +94,8 @@ export function initAuthModal() {
                 const { message, user, access_token, refresh_token } =
                     await register(credentials);
 
+                authState.setUser(user);
+
                 // save access_token localstogare
                 localStorage.setItem("accessToken", access_token);
                 localStorage.setItem("refreshToken", refresh_token);
@@ -144,13 +150,16 @@ export function initAuthModal() {
             // when done saving
             showCurrentUser(user);
             closeModal();
+            if (typeof initLibrary === "function") await initLibrary();
+            if (typeof initSidebarController === "function")
+                await initSidebarController();
+
             toast({
                 type: "success",
                 title: "Success",
                 message: message,
                 duration: 3000,
             });
-            window.location.reload();
         } catch (error) {
             const code = error?.response?.error?.code;
             const message = error?.response?.error?.message;
