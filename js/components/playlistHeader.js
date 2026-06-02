@@ -1,7 +1,6 @@
 import { formatDurationFullText } from "../utils/formatDuration.js";
 function playlistHeader(playlist) {
     const totalSongs = playlist.total_tracks;
-    console.log(totalSongs);
 
     const hasImage =
         playlist.image_url &&

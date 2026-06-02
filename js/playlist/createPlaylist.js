@@ -1,5 +1,8 @@
 import httpRequest from "../api/httpRequest.js";
 import renderPlaylistItem from "./renderPlaylistItem.js";
+import initLibrary from "./initLibrary.js";
+import { initSidebarController } from "../pages/initSidebarController.js";
+import { toast } from "../components/toast.js";
 
 async function createPlaylist() {
     try {
@@ -15,7 +18,9 @@ async function createPlaylist() {
                 name: `My Playlist #${playlistCount}`,
             });
             const playlist = res.playlist;
-            console.log(playlist);
+            if (typeof initLibrary === "function") await initLibrary();
+            if (typeof initSidebarController === "function")
+                await initSidebarController();
 
             const formatPlaylist = container.insertAdjacentHTML(
                 "beforeend",
@@ -23,6 +28,11 @@ async function createPlaylist() {
             );
 
             window.location.hash = `/playlists/${res.playlist.id}`;
+            toast({
+                type: "success",
+                title: "Success",
+                message: "New playlist created successfully.",
+            });
         } else {
             const signupForm = document.getElementById("signupForm");
             const loginForm = document.getElementById("loginForm");
