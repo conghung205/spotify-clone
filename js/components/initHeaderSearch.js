@@ -12,7 +12,7 @@ export function initHeaderSearch() {
     if (!searchInput || !dropdownResults) return;
 
     homeBtn.addEventListener("click", () => {
-        window.location = "";
+        window.location.hash = "#/";
     });
 
     // SỰ KIỆN GÕ CHỮ
