@@ -46,7 +46,7 @@ export function initSidebarController(scopeSelector = "") {
     if (!libraryContent) return;
 
     logo.addEventListener("click", () => {
-        window.location = "/";
+        window.location.hash = "#/";
     });
 
     searchBtn?.addEventListener("click", (e) => {
