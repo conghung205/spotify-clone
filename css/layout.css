@@ -11,6 +11,7 @@
     gap: var(--spacing-sm);
     padding: var(--spacing-sm);
     background-color: var(--bg-primary);
+    overflow-x: hidden;
 }
 
 /* Sidebar */

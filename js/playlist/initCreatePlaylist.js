@@ -1,12 +1,11 @@
 import createPlaylist from "./createPlaylist.js";
 
 function initCreatePlaylist() {
-    const createBtn = document.querySelector(".create-btn");
-
-    if (!createBtn) return;
-
-    createBtn.addEventListener("click", async () => {
-        await createPlaylist();
+    document.addEventListener("click", async (e) => {
+        if (e.target.closest(".create-btn, #nav-create-mobile")) {
+            e.preventDefault();
+            await createPlaylist();
+        }
     });
 }
 

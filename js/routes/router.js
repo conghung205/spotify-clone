@@ -5,6 +5,7 @@ import initPlaylistPage from "../pages/initPlaylistPage.js";
 import { initSearchPage } from "../pages/initSearchPage.js";
 import initCollectionPage from "../pages/initCollectionPage.js";
 import initProfilePage from "../pages/initProfilePage.js";
+import initLibraryPage from "../pages/initLibraryPage.js";
 
 function router() {
     const hash = window.location.hash || "#/";
@@ -56,6 +57,8 @@ function router() {
         initCollectionPage();
     } else if (hash.startsWith("#/me")) {
         initProfilePage();
+    } else if (hash.startsWith("#/library")) {
+        initLibraryPage();
     }
 }
 

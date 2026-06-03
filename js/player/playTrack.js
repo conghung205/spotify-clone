@@ -39,6 +39,7 @@ function playTrack(playlist, index) {
     });
 
     updateActiveTrack();
+    syncMiniPlayer(track);
 }
 
 function updateActiveTrack() {
@@ -60,6 +61,27 @@ function updateActiveTrack() {
     );
     if (currentPlaylistRow) {
         currentPlaylistRow.classList.add("playing");
+    }
+}
+
+export function syncMiniPlayer(track) {
+    const miniPlayer = document.getElementById("mini-player");
+    const contentContainer = document.getElementById("content-container");
+    if (!miniPlayer) return;
+
+    if (audio.src) {
+        miniPlayer.classList.remove("hidden");
+        contentContainer.style.paddingBottom = "76px";
+
+        if (track) {
+            document.getElementById("mini-avatar").src =
+                track.track_image_url || track.image_url;
+            document.getElementById("mini-title").textContent =
+                track.title || track.track_title;
+        }
+    } else {
+        miniPlayer.classList.add("hidden");
+        contentContainer.style.paddingBottom = "0";
     }
 }
 

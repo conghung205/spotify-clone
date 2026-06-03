@@ -2,7 +2,6 @@ import { login, register } from "../api/auth.js";
 import { showCurrentUser } from "../auth/authUI.js";
 import { showFieldError, clearInputError } from "../utils/validation.js";
 import { toast } from "../components/toast.js";
-import initLibrary from "../playlist/initLibrary.js";
 import { initSidebarController } from "../pages/initSidebarController.js";
 import authState from "./authState.js";
 
@@ -150,7 +149,6 @@ export function initAuthModal() {
             // when done saving
             showCurrentUser(user);
             closeModal();
-            if (typeof initLibrary === "function") await initLibrary();
             if (typeof initSidebarController === "function")
                 await initSidebarController();
 

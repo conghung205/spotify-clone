@@ -5,7 +5,6 @@ import router from "./routes/router.js";
 import mainLayout from "./layout/mainLayout.js";
 import initPlayerControls from "./player/initPlayerControls.js";
 import initCreatePlaylist from "./playlist/initCreatePlaylist.js";
-import initLibrary from "./playlist/initLibrary.js";
 import initPlaylistContextMenu from "./playlist/initPlaylistContextMenu.js";
 import { initSidebarController } from "./pages/initSidebarController.js";
 import { syncSidebarActiveState } from "./playlist/syncSidebarActiveState.js";
@@ -31,8 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const hasToken = localStorage.getItem("accessToken");
 
     if (hasToken) {
-        // Chỉ khi có token mới đi lấy dữ liệu cá nhân
-        initLibrary();
+        // Chỉ khi có token mới đi lấy dữ liệu cá nhân;
         initSidebarController();
     }
 

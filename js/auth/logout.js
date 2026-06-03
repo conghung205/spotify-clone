@@ -1,7 +1,6 @@
 import { logout as logoutApi } from "../api/auth.js";
 import { showAuthButtons } from "./authUI.js";
 import { toast } from "../components/toast.js";
-import initLibrary from "../playlist/initLibrary.js";
 import { initSidebarController } from "../pages/initSidebarController.js";
 import authState from "./authState.js";
 
@@ -16,7 +15,6 @@ export async function logout() {
 
     showAuthButtons();
 
-    if (typeof initLibrary === "function") await initLibrary();
     if (typeof initSidebarController === "function")
         await initSidebarController();
 

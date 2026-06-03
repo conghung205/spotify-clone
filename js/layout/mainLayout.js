@@ -3,6 +3,8 @@ import header from "../components/header.js";
 import player from "../components/player.js";
 import authModal from "../components/authModal.js";
 import renameModal from "../components/renameModal.js";
+import bottomNav from "../components/bottomNav.js";
+import miniPlayer from "../components/miniPlayer.js";
 function mainLayout() {
     return `
     <div class="app-container">
@@ -20,6 +22,11 @@ function mainLayout() {
 
         <!-- player -->
         ${player()}
+
+        <div class="mobile-bottom-area">
+            ${miniPlayer()}
+            ${bottomNav()}
+        </div>
 
         ${authModal()}
         ${renameModal()}

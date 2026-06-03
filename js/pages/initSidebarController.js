@@ -12,7 +12,7 @@ export const sidebarReadyPromise = new Promise((resolve) => {
     sidebarResolveFn = resolve;
 });
 
-export function initSidebarController() {
+export function initSidebarController(scopeSelector = "") {
     const sidebarState = {
         currentTab: "all",
         searchQuery: "",
@@ -25,15 +25,23 @@ export function initSidebarController() {
         tracks: [],
     };
 
-    const playlistTabBtn = document.querySelector(".nav-tab.nav-playlist");
-    const artistsTabBtn = document.querySelector(".nav-tab.nav-artists");
-    const albumsTabBtn = document.querySelector(".nav-tab.nav-albums");
-    const libraryContent = document.querySelector(".library-content");
-    const logo = document.querySelector(".logo i");
+    const prefix = scopeSelector ? `${scopeSelector} ` : "";
 
-    const searchContainer = document.querySelector(".search-library");
-    const searchBtn = document.querySelector(".search-library-btn");
-    const searchInput = document.querySelector(".header-library .search");
+    const playlistTabBtn = document.querySelector(
+        `${prefix}.nav-tab.nav-playlist`,
+    );
+    const artistsTabBtn = document.querySelector(
+        `${prefix}.nav-tab.nav-artists`,
+    );
+    const albumsTabBtn = document.querySelector(`${prefix}.nav-tab.nav-albums`);
+    const libraryContent = document.querySelector(`${prefix}.library-content`);
+    const logo = document.querySelector(`${prefix}.logo i`);
+
+    const searchContainer = document.querySelector(`${prefix}.search-library`);
+    const searchBtn = document.querySelector(`${prefix}.search-library-btn`);
+    const searchInput = document.querySelector(
+        `${prefix}.header-library .search`,
+    );
 
     if (!libraryContent) return;
 
@@ -143,15 +151,15 @@ export function initSidebarController() {
             if (totalLikedSongs > 0) {
                 rawData.tracks = [
                     {
-                        id: "liked-songs-id", // Định danh riêng cho mục đặc biệt này
+                        id: "liked-songs-id",
                         name: "Liked Songs",
-                        image: "", // Đánh dấu để hàm render nhận diện và vẽ icon Trái Tim
+                        image: "",
                         subText: `Playlist • ${totalLikedSongs} songs`,
-                        type: "song", // Đặt type riêng để xử lý click và giao diện
+                        type: "song",
                     },
                 ];
             } else {
-                rawData.tracks = []; // Nếu không có bài nào liked thì trống
+                rawData.tracks = [];
             }
 
             // HIỂN THỊ NÚT TAB
@@ -237,18 +245,18 @@ export function initSidebarController() {
         if (sidebarState.currentTab === "all") {
             dataToRender.forEach((item) => {
                 if (item.type === "artist") {
-                    renderArtistSidebar([item], true);
+                    renderArtistSidebar([item], true, libraryContent);
                 } else {
-                    renderPlaylistSidebar([item], true);
+                    renderPlaylistSidebar([item], true, libraryContent);
                 }
             });
         } else {
             if (sidebarState.currentTab === "playlists")
-                renderPlaylistSidebar(dataToRender);
+                renderPlaylistSidebar(dataToRender, false, libraryContent);
             if (sidebarState.currentTab === "albums")
-                renderPlaylistSidebar(dataToRender);
+                renderPlaylistSidebar(dataToRender, false, libraryContent);
             if (sidebarState.currentTab === "artists")
-                renderArtistSidebar(dataToRender);
+                renderArtistSidebar(dataToRender, false, libraryContent);
         }
 
         if (shouldRenderLikedSongs) {

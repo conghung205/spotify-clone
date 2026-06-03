@@ -1,7 +1,12 @@
 import artistItem from "./artistItem.js";
 
-function renderArtistSidebar(artists, isAppend = false) {
-    const container = document.querySelector(".library-content");
+function renderArtistSidebar(
+    artists,
+    isAppend = false,
+    wrapper = ".library-content",
+) {
+    const container =
+        typeof wrapper === "string" ? document.querySelector(wrapper) : wrapper;
 
     if (!container) return;
 

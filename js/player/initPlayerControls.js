@@ -100,6 +100,12 @@ function initPlayerControls() {
         timeStart.textContent = formatDuration(currentSeconds);
         progressFill.style.width = `${percent}%`;
         progressHandle.style.left = `${percent}%`;
+
+        // mini-player
+        const miniProgressFill = document.querySelector(".mini-progress-fill");
+        if (miniProgressFill) {
+            miniProgressFill.style.width = `${percent}%`;
+        }
     });
 
     audio.addEventListener("ended", () => handleTrackEnded(audio));

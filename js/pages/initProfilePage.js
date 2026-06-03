@@ -2,7 +2,6 @@ import profilePage from "./profilePage.js";
 import httpRequest from "../api/httpRequest.js";
 import { toast } from "../components/toast.js";
 import authState from "../auth/authState.js";
-import initLibrary from "../playlist/initLibrary.js";
 import { initSidebarController } from "../pages/initSidebarController.js";
 
 let currentEditType = null;
@@ -159,9 +158,6 @@ async function initProfilePage() {
 
                     const freshUser = await initProfilePage();
 
-                    if (typeof initLibrary === "function") {
-                        await initLibrary();
-                    }
                     if (typeof initSidebarController === "function") {
                         await initSidebarController();
                     }

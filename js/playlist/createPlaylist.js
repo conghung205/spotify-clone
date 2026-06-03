@@ -1,6 +1,5 @@
 import httpRequest from "../api/httpRequest.js";
 import renderPlaylistItem from "./renderPlaylistItem.js";
-import initLibrary from "./initLibrary.js";
 import { initSidebarController } from "../pages/initSidebarController.js";
 import { toast } from "../components/toast.js";
 
@@ -18,14 +17,24 @@ async function createPlaylist() {
                 name: `My Playlist #${playlistCount}`,
             });
             const playlist = res.playlist;
-            if (typeof initLibrary === "function") await initLibrary();
-            if (typeof initSidebarController === "function")
-                await initSidebarController();
 
-            const formatPlaylist = container.insertAdjacentHTML(
-                "beforeend",
-                renderPlaylistItem(playlist),
-            );
+            const isMobileLibrary =
+                window.location.hash.startsWith("#/library");
+
+            if (typeof initSidebarController === "function") {
+                if (isMobileLibrary) {
+                    // Nếu đang ở mobile cập nhật riêng vùng #content-container
+                    await initSidebarController("#content-container");
+                } else {
+                    // Nếu ở desktop cập nhật sidebar mặc định
+                    await initSidebarController();
+                }
+            }
+
+            // const formatPlaylist = container.insertAdjacentHTML(
+            //     "beforeend",
+            //     renderPlaylistItem(playlist),
+            // );
 
             window.location.hash = `/playlists/${res.playlist.id}`;
             toast({
