@@ -157,7 +157,14 @@ function handleAlbumMenu(e, albumItem) {
 
             try {
                 await httpRequest.del(`/albums/${albumId}/like`);
-                albumItem.remove();
+                // albumItem.remove();
+                document.dispatchEvent(new CustomEvent("libraryChanged"));
+
+                toast({
+                    type: "success",
+                    title: "Success",
+                    message: "unlike successfully.",
+                });
             } catch (error) {
                 console.error("Lỗi khi unlike album:", error);
             } finally {
@@ -197,7 +204,14 @@ function handleArtistMenu(e, artistItem) {
 
             try {
                 await httpRequest.del(`/artists/${artistId}/follow`);
-                artistItem.remove();
+                // artistItem.remove();
+                document.dispatchEvent(new CustomEvent("libraryChanged"));
+
+                toast({
+                    type: "success",
+                    title: "Success",
+                    message: "unfollow successfully.",
+                });
             } catch (error) {
                 console.error("Lỗi khi unfollow artist:", error);
             } finally {
@@ -362,7 +376,15 @@ function initPlaylistMenuActions(menu, playlist, nameEl) {
                 if (hash === `#/playlists/${playlist.id}`) {
                     const headerTitle =
                         document.querySelector(".playlist-title");
-                    if (headerTitle) headerTitle.textContent = newVersionName;
+                    if (headerTitle) {
+                        headerTitle.textContent = newVersionName;
+
+                        toast({
+                            type: "success",
+                            title: "Success",
+                            message: "renamed successfully.",
+                        });
+                    }
                 }
             });
         });
@@ -375,10 +397,11 @@ function initPlaylistMenuActions(menu, playlist, nameEl) {
 
             try {
                 await deletePlaylist(playlist.id);
-                const playlistElement = document.querySelector(
-                    `[data-id="${playlist.id}"]`,
-                );
-                playlistElement?.remove();
+                // const playlistElement = document.querySelector(
+                //     `[data-id="${playlist.id}"]`,
+                // );
+                // playlistElement?.remove();
+                document.dispatchEvent(new CustomEvent("libraryChanged"));
 
                 const hash = window.location.hash;
                 if (hash === `#/playlists/${playlist.id}`) {

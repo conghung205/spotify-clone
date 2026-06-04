@@ -369,6 +369,8 @@
     .main-header.scrolled {
         background: linear-gradient(to top, #000000 70%, rgba(0, 0, 0, 0.8));
     }
+    
+   
 }
 
 /* Small Mobile */
@@ -383,6 +385,28 @@
         width: 48%;
         margin: 0 auto;
         height: 140px;
+    }
+
+    #toast{
+        top: 20px;
+        right: 20px;
+        width: 60%;
+        min-width: 0;
+    }
+    .toast_icon{
+        font-size: 16px;
+    }
+    .toast_icon,
+    .toast_close{
+        padding: 0 8px;
+    }
+    .toast_title{
+        font-size: 14px;
+    }
+
+    .toast_msg{
+        font-size: 12px;
+        line-height: 1.2;
     }
 
     .playlist-title,

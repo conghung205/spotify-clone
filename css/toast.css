@@ -4,10 +4,11 @@
     top: 32px;
     right: 32px;
     z-index: 999;
-}
-.toast{
     min-width: 400px;
     max-width: 450px;
+}
+.toast{
+    width: 100%;
     display: flex;
     align-items: center;
     background-color: #fff;
