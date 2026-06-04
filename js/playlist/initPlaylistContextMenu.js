@@ -378,12 +378,6 @@ function initPlaylistMenuActions(menu, playlist, nameEl) {
                         document.querySelector(".playlist-title");
                     if (headerTitle) {
                         headerTitle.textContent = newVersionName;
-
-                        toast({
-                            type: "success",
-                            title: "Success",
-                            message: "renamed successfully.",
-                        });
                     }
                 }
             });
