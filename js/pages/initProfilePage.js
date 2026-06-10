@@ -3,6 +3,7 @@ import httpRequest from "../api/httpRequest.js";
 import { toast } from "../components/toast.js";
 import authState from "../auth/authState.js";
 import { initSidebarController } from "../pages/initSidebarController.js";
+import { sanitize } from "../utils/sanitize.js";
 
 let currentEditType = null;
 let currentSelectedFile = null;
@@ -38,7 +39,7 @@ async function initProfilePage() {
                 modalBody.innerHTML = `
                     <div class="input-group">
                         <label>New display name</label>
-                        <input type="text" id="input-profile-edit" value="${user.display_name || ""}" placeholder="Nhập tên hiển thị của bạn..." />
+                        <input type="text" id="input-profile-edit" value="${sanitize(user.display_name) || ""}" placeholder="Nhập tên hiển thị của bạn..." />
                     </div>
                 `;
             } else if (rowId === "row-avatar") {
@@ -104,7 +105,7 @@ async function initProfilePage() {
 
                         // update display_name or username
                         await httpRequest.put("/users/me", {
-                            [currentEditType]: inputValue,
+                            [currentEditType]: sanitize(inputValue),
                         });
                     }
                     // upload file image Avatar

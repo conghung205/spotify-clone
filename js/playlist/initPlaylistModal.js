@@ -5,6 +5,7 @@ import {
     closePlaylistModal,
     setupModalCloseEvents,
 } from "./modalController.js";
+import { sanitize } from "../utils/sanitize.js";
 
 function initPlaylistModal(playlist) {
     const modal = document.getElementById("playlist-modal");
@@ -74,8 +75,8 @@ function initPlaylistModal(playlist) {
         e.preventDefault();
 
         const formDataFields = {
-            name: playlistName.value,
-            description: playlistDesc.value,
+            name: sanitize(playlistName.value.trim()),
+            description: sanitize(playlistDesc.value.trim()),
         };
 
         try {
@@ -90,6 +91,8 @@ function initPlaylistModal(playlist) {
             // Cập nhật lại giao diện
             updatePlaylistHeader(res.playlist);
             updatePlaylistItemInSidebar(res.playlist);
+            const libraryEvent = new CustomEvent("libraryChanged");
+            document.dispatchEvent(libraryEvent);
 
             // Reset và đóng modal
             selectedFile = null;

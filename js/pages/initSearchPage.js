@@ -8,6 +8,7 @@ import { toast } from "../components/toast.js";
 import { sidebarReadyPromise } from "./initSidebarController.js";
 import { getMyLikeTracks } from "../api/tracks.js";
 import { handleLikeClick } from "../utils/likeHandler.js";
+import { sanitize } from "../utils/sanitize.js";
 
 function checkIsFollowedFromSidebar(id) {
     const sidebar = document.querySelector(".library-content");
@@ -62,7 +63,7 @@ export async function initSearchPage(query) {
             }
 
             if (dataToRender.length === 0) {
-                contentContainer.innerHTML = `<div class="no-results">No results found for "${query}"</div>`;
+                contentContainer.innerHTML = `<div class="no-results">No results found for "${sanitize(query)}"</div>`;
                 return;
             }
 

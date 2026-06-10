@@ -31,11 +31,6 @@ async function createPlaylist() {
                 }
             }
 
-            // const formatPlaylist = container.insertAdjacentHTML(
-            //     "beforeend",
-            //     renderPlaylistItem(playlist),
-            // );
-
             window.location.hash = `/playlists/${res.playlist.id}`;
             toast({
                 type: "success",

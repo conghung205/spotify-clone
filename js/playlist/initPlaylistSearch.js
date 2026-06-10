@@ -2,6 +2,7 @@ import recommendedSection from "../components/recommendedSection.js";
 import { addTracktoPlaylist } from "../api/playlist.js";
 import httpRequest from "../api/httpRequest.js";
 import playlistSearchResult from "../components/playlistSearchResult.js";
+import { sanitize } from "../utils/sanitize.js";
 
 export function initPlaylistSearch(
     playlistId,
@@ -166,7 +167,7 @@ export function initPlaylistSearch(
                     if (tracks.length === 0) {
                         dynamicResultsZone.innerHTML = `
                             <div class="no-results-tracks" style="padding: 40px 20px; text-align: center;">
-                                <h3 style="color: #fff; font-size: 18px; margin-bottom: 8px;">No results found for "${keyword}"</h3>
+                                <h3 style="color: #fff; font-size: 18px; margin-bottom: 8px;">No results found for "${sanitize(keyword)}"</h3>
                                 <p style="color: #a7a7a7; font-size: 14px;">Please make sure your words are spelled correctly, or use fewer or different keywords.</p>
                             </div>
                         `;
