@@ -55,7 +55,7 @@ function playlistHeader(playlist) {
                 ${playlist.description || ""}
             </p>
             <p class="playlist-description">
-                <a href="#/me" class="playlist-username">${playlist.user_display_name}</a> • ${totalSongs} 
+                <a href="#/me" class="playlist-username">${playlist.user_display_name || "me"}</a> • ${totalSongs} 
                 ${totalSongs > 1 ? "songs" : "song"}, ${formatDurationFullText(playlist.total_duration)}
             </p>
         </div>
